@@ -1,0 +1,250 @@
+package bcel.cardcenter.cbs.carofat.reconcile.action;
+
+import com.opensymphony.xwork2.ActionSupport;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.SessionAware;
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+import bcel.cardcenter.cbs.carofat.utility.CupTxnFileReader;
+import bcel.cardcenter.cbs.carofat.utility.CupTxnUtil;
+import bcel.cardcenter.cbs.utility.Utility;
+import bcel.cardcenter.cbs.utility.report.CupTxnReportExportion;
+import bcel.cardcenter.cbs.utility.report.Parameter;
+import bcel.cardcenter.cbs.utility.report.Report;
+import bcel.cardcenter.cbs.utility.report.ReportExportion;
+
+public class CupTxnUploadAction extends ActionSupport implements SessionAware{
+	private static final long serialVersionUID = 1L;
+	private int record;
+	private Date date;
+	private String option;
+	private File file;
+	
+	private String response;
+	private String message;
+	
+	private CupTxnUtil cupTxnUtil;
+	private int totalNum;
+	private double totalAmount;
+	private double totalFee;
+	private double totalNet;
+	
+	private List<CupTxn> cupTxns;
+	private Map<String, Object> session;
+	
+	private InputStream fileInputStream;
+	private String contentDisposition;
+	private Long contentLength;
+	private static String template = "cupTxnReport.jrxml";
+	private Parameter param;
+	private ReportExportion reportExportion;
+	
+	public InputStream getFileInputStream() {
+		return fileInputStream;
+	}
+	public String getContentDisposition() {
+		return contentDisposition;
+	}
+	public void setContentDisposition(String contentDisposition) {
+		this.contentDisposition = contentDisposition;
+	}
+	public Long getContentLength() {
+		return contentLength;
+	}
+	public void setContentLength(Long contentLength) {
+		this.contentLength = contentLength;
+	}
+	public Parameter getParam() {
+		return param;
+	}
+	public void setParam(Parameter param) {
+		this.param = param;
+	}
+	
+	/****************************
+	 * 
+	 * @return
+	 */
+	public int getRecord() {
+		return record;
+	}
+	public void setRecord(int record) {
+		this.record = record;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
+	public String getOption() {
+		return option;
+	}
+	public void setOption(String option) {
+		this.option = option;
+	}
+	public void setCupTxnUtil(CupTxnUtil cupTxnUtil){
+		this.cupTxnUtil = cupTxnUtil;
+	}
+	public List<CupTxn> getCupTxns() {
+		return cupTxns;
+	}
+	public void setCupTxns(List<CupTxn> cupTxns) {
+		this.cupTxns = cupTxns;
+	}
+	public int getTotalNum() {
+		return totalNum;
+	}
+	public void setTotalNum(int totalNum) {
+		this.totalNum = totalNum;
+	}
+	public double getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+	public double getTotalFee() {
+		return totalFee;
+	}
+	public void setTotalFee(double totalFee) {
+		this.totalFee = totalFee;
+	}
+	public double getTotalNet() {
+		return totalNet;
+	}
+	public void setTotalNet(double totalNet) {
+		this.totalNet = totalNet;
+	}
+	public String getResponse() {
+		return response;
+	}
+	public void setResponse(String response) {
+		this.response = response;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	// execute method
+	public String execute(){
+		try{
+			java.sql.Date txnDate = new java.sql.Date(date.getTime());
+			boolean ret = cupTxnUtil.validatUploadDateType(txnDate, option);
+			if(!ret){
+				CupTxnFileReader cupTxnFileReader = cupTxnUtil.getCupTxnFileReader(option,file,txnDate);
+				
+				// output data
+				setCupTxns(cupTxnFileReader.read());
+				setTotalNum(cupTxns.size());
+				setTotalAmount(totalAmount(cupTxns));
+				setTotalFee(totalFee(cupTxns));
+				setTotalNet(getTotalAmount()+getTotalFee());
+				
+				session.put("cupTxns", cupTxns);
+				setResponse(SUCCESS);
+				setMessage("Data has been processed successfully.");
+				return SUCCESS;
+			}
+			setResponse(ERROR);
+			setMessage("Specific date data has been upload !");
+			return ERROR;
+		}
+		catch(Exception ex){
+			setResponse(ERROR);
+			setMessage(ex.getMessage());
+			return ERROR;
+		}
+	}
+	
+	// action for download file
+	@SuppressWarnings("unchecked")
+	public String download() throws Exception{
+		List<CupTxn> cupTxns = (List<CupTxn>) session.get("cupTxns");
+		String conPath = ServletActionContext.getServletContext().getRealPath("output/cupTxn");
+		String path = ServletActionContext.getServletContext().getRealPath("format_report");
+		String formatPath =path+"/"+template;
+		String format = param.getFormat();
+		String fileName = "CUP-" +Utility.date2Str(param.getImportDate())+"-"+option+"."+format;
+		String destPath = conPath + "/" + fileName;
+		getParam().setFormatPath(formatPath);
+		getParam().setDestPath(destPath);
+		getParam().setType(getOption());
+		reportExportion = new CupTxnReportExportion();
+		reportExportion.setParam(param);
+		List<Report> reports = toReportList(cupTxns);
+		reportExportion.setReports(reports);
+		if(reportExportion.export()){
+			File file = new File(destPath);
+			fileInputStream = new FileInputStream(file);
+			this.setContentDisposition("filename=\""+ fileName +"\"");
+			this.setContentLength(file.length());	
+			return SUCCESS;
+		}
+		setResponse(ERROR);
+		setMessage("File Download Failed.");
+		return ERROR;
+	}
+	
+	// persist data to database
+	@SuppressWarnings("unchecked")
+	public String persist(){
+		try{
+			List<CupTxn> cupTxns = (List<CupTxn>) session.get("cupTxns");
+			if(option.equals("settle"))
+				cupTxnUtil.saveAll(cupTxns);
+			else
+				cupTxnUtil.insertAll(cupTxns);
+			setResponse(SUCCESS);
+			setMessage("Data has been persisted successful.");
+			return SUCCESS;
+		}
+		catch(Exception ex){
+			setResponse(ERROR);
+			setMessage(ex.getMessage());
+			return ERROR;
+		}
+	}
+	private double totalAmount(List<CupTxn> cupTxns){
+		double amount = 0;
+		for(CupTxn txn : cupTxns){
+			amount += txn.getAmount();
+		}
+		return amount;
+	}
+	
+	private double totalFee(List<CupTxn> cupTxns){
+		double fee = 0;
+		for(CupTxn txn : cupTxns)
+			fee+=txn.getFee();
+		return fee;
+	}
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
+	
+	private List<Report> toReportList(List<CupTxn> cups){
+		List<Report> reports = new ArrayList<Report>();
+		for(CupTxn cup : cups){
+			Report report = cup;
+			reports.add(report);
+		}
+		return reports;
+	}
+}

@@ -1,0 +1,79 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import oracle.jdbc.OracleTypes;
+
+import org.hibernate.jdbc.Work;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class TxnByDateOptionWork implements Work {
+	private Date date;
+	private String option;
+	private List<CupTxn> cupTxns;
+	public TxnByDateOptionWork(Date date, String option) {
+		super();
+		this.date = date;
+		this.option = option;
+	}
+	@Override
+	public void execute(Connection conn) throws SQLException {
+		String sql = "{ ? = call CBSPACKAGE.GETCUPTXNBYDATEOPTION(?,?)}";
+		CallableStatement call = conn.prepareCall(sql);
+		call.registerOutParameter(1, OracleTypes.CURSOR);
+		call.setDate(2, date);
+		call.setString(3, option);
+		call.execute();
+		ResultSet rs = (ResultSet) call.getObject(1);
+		List<CupTxn> cups = new ArrayList<CupTxn>();
+		while(rs.next()){
+			Date date = rs.getDate("TXNDATE");
+			String card = rs.getString("CARD");
+			double amount = rs.getDouble("AMOUNT");
+			double fee	= rs.getDouble("FEE");
+			double net	= rs.getDouble("NET");
+			String trace = rs.getString("TRACE");
+			CupTxn	cup = new CupTxn();
+			cup.setDate(date);
+			cup.setCard(card);
+			cup.setAmount(amount);
+			cup.setFee(fee);
+			cup.setNet(net);
+			cup.setTrace(trace);
+			
+			if(option.equals("settle")){
+				String apprcode = rs.getString("APPRCODE");
+				String terminalId = rs.getString("TERMINALID");
+				String merchant	 = rs.getString("MERCHANT");
+				String address	= rs.getString("ADDRESS");
+				String country	= rs.getString("COUNTRY");
+				String txnType	= rs.getString("TXNTYPE");
+				String status	= rs.getString("STATUS");
+				cup.setApprCode(apprcode);
+				cup.setTerminalId(terminalId);
+				cup.setMerchant(merchant);
+				cup.setAddress(address);
+				cup.setCountry(country);
+				cup.setTxnType(txnType);
+				cup.setStatus(status);
+			}
+			cups.add(cup);
+		}
+		setCupTxns(cups);
+	}
+	
+	public List<CupTxn> getCupTxns() {
+		return this.cupTxns;
+	}
+	
+	public void setCupTxns(List<CupTxn> cupTxns){
+		this.cupTxns  = cupTxns;
+	}
+}

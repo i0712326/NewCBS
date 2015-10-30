@@ -1,0 +1,11 @@
+@CHARSET "ISO-8859-1";
+
+.parentClass{
+	min-height: 400px;
+}
+
+.childClass{
+	margin	: 10px;
+	width	: 500px;
+	float	: left;
+}

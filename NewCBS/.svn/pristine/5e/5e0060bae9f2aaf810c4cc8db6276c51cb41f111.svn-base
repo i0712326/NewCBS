@@ -1,0 +1,55 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.CallableStatement;
+
+import oracle.jdbc.OracleTypes;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.jdbc.Work;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
+public class ValidateDateCallback implements HibernateCallback {
+	private Date date;
+	public ValidateDateCallback(Date date){
+		this.date = date;
+	}
+	@Override
+	public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+		ValidateDateWork work = new ValidateDateWork(date);
+		session.doWork(work);
+		return work.getResult();
+	}
+	private class ValidateDateWork implements Work{
+		private Date date;
+		private boolean result;
+		public ValidateDateWork(Date date){
+			this.date = date;
+		}
+		@Override
+		public void execute(Connection conn) throws SQLException {
+			String sql = "{? = call CBSPACKAGE.VALIDATEDATECUP( ? )}";
+			CallableStatement call = conn.prepareCall(sql);
+			call.registerOutParameter(1, OracleTypes.INTEGER);
+			call.setDate(2, date);
+			call.execute();
+			int ret = (int) call.getObject(1);
+			if(ret>0)
+				setResult(true);
+			else
+				setResult(false);
+		}
+
+		public boolean getResult() {
+			return result;
+		}
+		public void setResult(boolean result){
+			this.result = result;
+		}
+		
+	}
+}

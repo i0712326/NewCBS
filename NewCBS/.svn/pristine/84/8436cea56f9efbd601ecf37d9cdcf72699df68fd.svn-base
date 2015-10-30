@@ -1,0 +1,28 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.SQLException;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class UpdateCupTxnCallback implements HibernateCallback{
+	private CupTxn cup;
+	private String option;
+	
+	public UpdateCupTxnCallback(CupTxn cup, String option){
+		this.cup = cup;
+		this.option = option;
+	}
+	
+	@Override
+	public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+		UpdateCupTxnWork work = new UpdateCupTxnWork(cup,option);
+		session.doWork(work);
+		return null;
+	}
+
+}

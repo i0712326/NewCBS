@@ -1,0 +1,322 @@
+package bcel.cardcenter.cbs.carofat.reconcile.action;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.struts2.ServletActionContext;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+import bcel.cardcenter.cbs.carofat.utility.CupTxnUtil;
+import bcel.cardcenter.cbs.utility.Utility;
+import bcel.cardcenter.cbs.utility.report.CupTxnReportExportion;
+import bcel.cardcenter.cbs.utility.report.Parameter;
+import bcel.cardcenter.cbs.utility.report.Report;
+import bcel.cardcenter.cbs.utility.report.ReportExportion;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class CupTxnReconcileAction extends ActionSupport {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * input data
+	 */
+	private Date date;
+	/**
+	 * result
+	 */
+	private List<CupTxn> settle;
+	private List<CupTxn> state;
+	private double stateTotal;
+	private double settleTotal;
+	private double stateFee;
+	private double settleFee;
+	private double stateNet;
+	private double settleNet;
+	private double stateNum;
+	private double settleNum;
+	/****
+	 * Response message
+	 */
+	private String response;
+	private String message;
+	/**
+	 * business logic
+	 * 
+	 */
+	private CupTxnUtil cupTxnUtil;
+	/**
+	 *setter and getter 
+	 *
+	 */
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public List<CupTxn> getSettle() {
+		return settle;
+	}
+	public void setSettle(List<CupTxn> settle) {
+		this.settle = settle;
+	}
+	public List<CupTxn> getState() {
+		return state;
+	}
+	public void setState(List<CupTxn> state) {
+		this.state = state;
+	}
+	public void setCupTxnUtil(CupTxnUtil cupTxnUtil) {
+		this.cupTxnUtil = cupTxnUtil;
+	}
+	public double getStateTotal() {
+		return stateTotal;
+	}
+	public void setStateTotal(double stateTotal) {
+		this.stateTotal = stateTotal;
+	}
+	public double getSettleTotal() {
+		return settleTotal;
+	}
+	public void setSettleTotal(double settleTotal) {
+		this.settleTotal = settleTotal;
+	}
+	public double getStateFee() {
+		return stateFee;
+	}
+	public void setStateFee(double stateFee) {
+		this.stateFee = stateFee;
+	}
+	public double getSettleFee() {
+		return settleFee;
+	}
+	public void setSettleFee(double settleFee) {
+		this.settleFee = settleFee;
+	}
+	public double getStateNet() {
+		return stateNet;
+	}
+	public void setStateNet(double stateNet) {
+		this.stateNet = stateNet;
+	}
+	public double getSettleNet() {
+		return settleNet;
+	}
+	public void setSettleNet(double settleNet) {
+		this.settleNet = settleNet;
+	}
+	public double getStateNum() {
+		return stateNum;
+	}
+	public void setStateNum(double stateNum) {
+		this.stateNum = stateNum;
+	}
+	public double getSettleNum() {
+		return settleNum;
+	}
+	public void setSettleNum(double settleNum) {
+		this.settleNum = settleNum;
+	}
+	public CupTxnUtil getCupTxnUtil() {
+		return cupTxnUtil;
+	}
+	/**
+	 *  message result
+	 * 
+	 */
+	public String getResponse() {
+		return response;
+	}
+	public void setResponse(String response) {
+		this.response = response;
+	}
+	public void setMessage(String message){
+		this.message = message;
+	}
+	public String getMessage(){
+		return this.message;
+	}
+	/**** action method *****/
+	public String reconcile(){
+		try{
+			// validation 
+			boolean valid = cupTxnUtil.validatDate(new java.sql.Date(date.getTime()));
+			if(!valid){
+				setState(cupTxnUtil.reconcileState());
+				setSettle(cupTxnUtil.reconcileSettle());
+				if(getState()!=null){
+					setStateTotal(total(getState()));
+					setStateNet(net(getState()));
+					setStateFee(fee(getState()));
+					setStateNum(getState().size());
+				}
+				
+				if(getSettle()!=null){
+					setSettleTotal(total(getSettle()));
+					setSettleFee(fee(getSettle()));
+					setSettleNet(net(getSettle()));
+					setSettleNum(getSettle().size());
+				}
+				
+				setResponse(SUCCESS);
+				setMessage("Data has been processed successfully.");
+				return SUCCESS;
+			}
+			else{
+				setResponse(ERROR);
+				setMessage("Specific date data has been process");
+				return ERROR;
+			}
+		}
+		catch(Exception ex){
+			setResponse(ERROR);
+			setMessage(ex.getMessage());
+			return ERROR;
+		}
+	}
+	
+	public String update() {
+		try{
+			int ret = cupTxnUtil.updateCupTxnStatus();
+			setResponse(SUCCESS);
+			setMessage(ret +" record(s) has been update successfully.");
+			return SUCCESS;
+		}
+		catch(Exception ex){
+			setResponse(ERROR);
+			setMessage(ex.getMessage());
+			return ERROR;
+		}
+	}
+	
+	public String viewState() {
+		try{
+			setState(cupTxnUtil.getState());
+			setResponse(SUCCESS);
+			return SUCCESS;
+		}
+		catch(Exception ex){
+			setResponse(ERROR);
+			setMessage(ex.getMessage());
+			return ERROR;
+		}
+		
+	}
+	public String viewSettle(){
+		try{
+			setSettle(cupTxnUtil.getSettle());
+			setResponse(SUCCESS);
+			return SUCCESS;
+		}
+		catch(Exception ex){
+			setResponse(ERROR);
+			setMessage(ex.getMessage());
+			return ERROR;
+		}
+	}
+	
+	final static String TEMPLATE = "cupTxnReport.jrxml";
+	private Parameter param;
+	private InputStream fileInputStream;
+	private String contentDisposition;
+	private Long contentLength;
+	private ReportExportion reportExportion;
+	public Parameter getParam() {
+		return param;
+	}
+	public void setParam(Parameter param) {
+		this.param = param;
+	}
+	public InputStream getFileInputStream() {
+		return fileInputStream;
+	}
+	public void setFileInputStream(InputStream fileInputStream) {
+		this.fileInputStream = fileInputStream;
+	}
+	public String getContentDisposition() {
+		return contentDisposition;
+	}
+	public void setContentDisposition(String contentDisposition) {
+		this.contentDisposition = contentDisposition;
+	}
+	public Long getContentLength() {
+		return contentLength;
+	}
+	public void setContentLength(Long contentLength) {
+		this.contentLength = contentLength;
+	}
+	public String download() throws Exception{
+		try{
+			
+			String conPath = ServletActionContext.getServletContext().getRealPath("output/cupTxn/result");
+			String templatePath = ServletActionContext.getServletContext().getRealPath("format_report");
+			String fileName= "CUP-"+Utility.date2Str(date)+"-"+getParam().getType()+"."+getParam().getFormat();
+			String destPath = conPath+"/"+fileName;
+			String formatPath = templatePath+"/"+TEMPLATE;
+			List<CupTxn> cups = new ArrayList<CupTxn>();
+			if(getParam().getType().equals("state"))
+				cups = cupTxnUtil.getState();
+			else
+				cups = cupTxnUtil.getSettle();
+			getParam().setFormatPath(formatPath);
+			getParam().setDestPath(destPath);
+			getParam().setImportDate(date);
+			
+			reportExportion = new CupTxnReportExportion();
+			reportExportion.setParam(param);
+			reportExportion.setReports(toReportList(cups));
+			if(reportExportion.export()){
+				File file = new File(destPath);
+				fileInputStream = new FileInputStream(file);
+				this.setContentDisposition("filename=\""+ fileName +"\"");
+				this.setContentLength(file.length());	
+				return SUCCESS;
+			}
+			setResponse(ERROR);
+			setMessage("Could not export report");
+			return ERROR;
+		}
+		catch(Exception ex){
+			setResponse(ERROR);
+			setMessage(ex.getMessage());
+			return ERROR;
+		}
+	}
+	private double total(List<CupTxn> cups){
+		double sum = 0;
+		for(CupTxn cup : cups){
+			sum+=cup.getAmount();
+		}
+		return sum;
+	}
+	private double fee(List<CupTxn> cups){
+		double sum = 0;
+		for(CupTxn cup : cups){
+			sum += cup.getFee();
+		}
+		return sum;
+	}
+	private double net(List<CupTxn> cups){
+		double sum = 0;
+		for(CupTxn cup : cups){
+			sum+=cup.getNet();
+		}
+		return sum;
+	}
+	private List<Report> toReportList(List<CupTxn> cups){
+		List<Report> reports = new ArrayList<Report>();
+		for(CupTxn cup : cups){
+			Report report = cup;
+			reports.add(report);
+		}
+		return reports;
+	}
+}

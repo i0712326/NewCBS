@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	<!-- AAROFAT -->		
+	<import resource="atm-beans.xml"/>
+	
+	<!-- CAROFAT -->
+	<import resource="carofat-beans.xml"/>
+	
+	<!-- VAROFAT -->
+	<import resource="varofat-beans.xml"/>
+	
+	<!-- MAROFAT
+	<import resource="marofat-beans.xml"/>
+	 -->
+	<!-- transaction beans -->
+	
+	<bean id="transactionProxy" class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
+		<property name="interceptorNames">
+			<list>
+				<value>loggingService</value>
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Logging Service -->
+	
+	<bean id="loggingProxy" class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
+		<property name="interceptorNames">
+			<list>
+				<value>loggingService</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="loggingService" class="bcel.cardcenter.cbs.logging.LoggingServiceImp"/>
+	
+	<!-- Data Source -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@172.16.3.157:1521:bcel"/>
+		<property name="username" value="developer"/>
+		<property name="password" value="123"/>
+		<property name="maxActive" value="1000"/>
+		<property name="maxIdle" value="300"/>
+		<property name="maxWait" value="-1"/>
+	</bean>
+	
+	<!-- Session Factory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="annotatedClasses">
+			<list>
+				<value>bcel.cardcenter.cbs.aarofat.entity.User</value>
+				<value>bcel.cardcenter.cbs.aarofat.entity.Atm</value>
+				<value>bcel.cardcenter.cbs.aarofat.entity.Error</value>
+				<value>bcel.cardcenter.cbs.aarofat.entity.ErrorTxn</value>
+				<value>bcel.cardcenter.cbs.carofat.entity.CupTxnSettle</value>
+				<value>bcel.cardcenter.cbs.carofat.entity.CupTxnState</value>
+				<value>bcel.cardcenter.cbs.carofat.entity.CupSettle</value>
+				<value>bcel.cardcenter.cbs.carofat.entity.CupState</value>
+				<value>bcel.cardcenter.cbs.varofat.entity.VisaSettle</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.Oracle10gDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hibernate.connection.autocommit">false</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Transaction Management -->
+	
+	<bean id="transactionInterceptor" 
+       class="org.springframework.transaction.interceptor.TransactionInterceptor">
+	<property name="transactionManager" ref="transactionManager" />
+	<property name="transactionAttributes">
+	   <props>
+		<prop key="insert*,save*, add*">PROPAGATION_REQUIRED</prop>
+	   </props>
+	</property>
+    </bean>
+ 
+    <bean id="transactionManager" 
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	  <property name="dataSource" ref="dataSource" />
+	  <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+	
+</beans>

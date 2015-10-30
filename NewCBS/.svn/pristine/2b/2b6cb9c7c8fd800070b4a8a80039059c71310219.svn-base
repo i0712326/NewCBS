@@ -1,0 +1,38 @@
+package bcel.cardcenter.cbs.unit.test;
+
+import static org.junit.Assert.*;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.List;
+
+import org.junit.Test;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.core.io.Resource;
+
+import bcel.cardcenter.cbs.carofat.dao.CupTxnDao;
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class CupTxnDaoImpTest {
+
+	@Test
+	public void testReconcileState() {
+		String configure ="D:\\Server\\WWW\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\NewCBS\\WEB-INF\\applicationContext.xml";
+		//String configure = "applicationContext.xml";
+		ApplicationContext context = new FileSystemXmlApplicationContext(configure);
+		CupTxnDao cupTxnDao = (CupTxnDao) context.getBean("cupTxnDao");
+		List<CupTxn> cups = cupTxnDao.reconcileState();
+		assertTrue(cups.size()>0);
+	}
+	/*
+	@Test
+	public void testReconcileSettle() {
+		fail("Not yet implemented");
+	}
+	*/
+}

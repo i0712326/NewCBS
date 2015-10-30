@@ -1,0 +1,35 @@
+<script type="text/javascript" src="js/carofat/history.js"></script>
+<div id="CAROFAT-HISTORY">
+	<p>
+		<label for="CHDATE">
+			<strong> DATE : </strong>
+		</label>
+		<input type="text" id="CHDATE" name="DATE" size="12"/>
+		<button id="CHSEARCH">search</button>
+	</p>
+	<p>
+		<label for="CHCARD">
+			<strong>CARD : </strong>
+		</label>
+		<input type="text" id="CHCARD" name="CARD" value="%" size="12"/>
+		,&nbsp;&nbsp;
+		<label for="CHTRACE">
+			<strong>TRACE : </strong>
+		</label>
+		<input type="text" id="CHTRACE" name="TRACE" value="%" size="12"/>
+	</p>
+</div>
+<div id="CHTAB">
+	<ul>
+		<li><a href="#CHRET-STATE">STATE</a></li>
+		<li><a href="#CHRET-SETTLE">SETTLE</a></li>
+	</ul>
+	<div id="CHRET-STATE">
+		<table id="CHSTTABLE"></table>
+		<div id="CHSTPAGER"></div>
+	</div>
+	<div id="CHRET-SETTLE">
+		<table id="CHSETABLE"></table>
+		<div id="CHSEPAGER"></div>
+	</div>
+</div>

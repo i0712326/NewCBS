@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- get ATM id action -->
+	<bean id="getAtmIdAction" class="bcel.cardcenter.cbs.aarofat.reconcile.action.AtmGetIdAction" scope="prototype">
+		<property name="atmUtil" ref="atmUtil"/>
+	</bean>
+	
+	<!-- reconcile action -->
+	<bean id="reconcileFileAction" class="bcel.cardcenter.cbs.aarofat.reconcile.action.ReconcileFileAction" scope="prototype">
+		<property name="cwdProcessUtil" ref="cwdProcessUtil"/>
+	</bean>
+	
+	<!-- data persist action -->
+	<bean id="persistDataAction" class="bcel.cardcenter.cbs.aarofat.reconcile.action.RecordErrorTxnAction" scope="prototype">
+		<property name="errorTxnUtility" ref="errorTxnUtility"/>
+	</bean>
+	
+	<!-- Error Data Persist Business Logic -->
+	
+	<bean id="errorTxnUtility" parent="loggingProxy">
+		<property name="target" ref="errorTxnUtilityImp"/>
+	</bean>
+	
+	<bean id="errorTxnUtilityImp" class="bcel.cardcenter.cbs.utility.atm.ErrorTxnUtilityImp">
+		<property name="errorTxnDao" ref="errorTxnDao"/>
+	</bean>
+	
+	<bean id="errorTxnDao" parent="loggingProxy">
+		<property name="target" ref="errorTxnDaoImp"/>
+	</bean>
+	
+	<bean id="errorTxnDaoImp" class="bcel.cardcenter.cbs.aarofat.dao.ErrorTxnDaoImp">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- business logic for process all data -->
+	<bean id="cwdProcessUtil" parent="loggingProxy">
+		<property name="target" ref="cwdProcessUtilImp"/>
+	</bean>
+	
+	<bean id="cwdProcessUtilImp" class="bcel.cardcenter.cbs.utility.atm.CwdProcessUtilImp">
+		<property name="fileProcessor" ref="fileProcessor"/>
+		<property name="cwdOperation" ref="cwdOperation"/>
+	</bean>
+	<bean id="fileProcessor" parent="loggingProxy">
+		<property name="target" ref="fileProcessorImp"/>
+	</bean>
+	
+	<!-- file process for retrieve record -->
+	
+	<bean id="fileProcessorImp" class="bcel.cardcenter.cbs.utility.file.processor.FileProcessorImp">
+		<property name="atmGlProcess" ref="atmGlProcess"/>
+		<property name="atmJournalProcess" ref="atmJournalProcess"/>
+	</bean>
+	<bean id="atmGlProcess" class="bcel.cardcenter.cbs.utility.file.processor.AtmGlProcess"/>
+	<bean id="atmJournalProcess" class="bcel.cardcenter.cbs.utility.file.processor.AtmJournalProcess"/>
+	
+	<!-- Business group operation -->
+	
+	<bean id="cwdOperation" parent="loggingProxy">
+		<property name="target" ref="cwdOperationImp"/>
+	</bean>
+	<bean id="cwdOperationImp" class="bcel.cardcenter.cbs.utility.file.processor.CwdOperationImp">
+		<property name="errorDao" ref="errorDao"/>
+	</bean>
+	
+	<!-- Error DAO for list up error code -->
+	
+	<bean id="errorDao" parent="loggingProxy">
+		<property name="target" ref="errorDaoImp"/>
+	</bean>
+	
+	<bean id="errorDaoImp" class="bcel.cardcenter.cbs.aarofat.dao.ErrorDaoImp"/>
+	
+	<!--  ATM Utility for fetch list of the data -->
+	
+	<bean id="atmUtil" parent="loggingProxy">
+		<property name="target" ref="atmUtilImp" />
+	</bean>
+
+	<bean id="atmUtilImp" class="bcel.cardcenter.cbs.utility.atm.AtmUtilImp">
+		<property name="atmDao" ref="atmDao" />
+	</bean>
+
+	<bean id="atmDao" parent="transactionProxy">
+		<property name="target" ref="atmDaoImp" />
+	</bean>
+
+	<bean id="atmDaoImp" class="bcel.cardcenter.cbs.aarofat.dao.AtmDaoImp">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+</beans>

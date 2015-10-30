@@ -1,0 +1,54 @@
+<div id="ADDUSER-DASH">
+	<div id="ADDUSER-FORM">
+		<p>
+			<label for="USERID">
+				<strong> USER ID : </strong>
+			</label>
+			<input type="text" id="USERID" class="tb_from tb_font" size="9"/>
+			, &nbsp;&nbsp;
+			<label for="PASSWD">
+				<strong> ROLE : </strong>
+			</label>
+			<select id="ROLE">
+				<option value=""> select </option>
+				<option value="user">USER</option>
+				<option value="adminstrator">ADMIN</option>
+			</select>
+		</p>
+		<p>
+			<label for="FIRSTNAME">
+				<strong> FIRSTNAME : </strong>
+			</label>
+			<input type="text" id="FIRSTNAME" size="12" class="tb_from tb_font"/>
+			, &nbsp;&nbsp;
+			<label for="LASTNAME">
+				<strong> LASTNAME : </strong>
+			</label>
+			<input type="text" id="LASTNAME" size="12" class="tb_from tb_font"/>
+		</p>
+		<p>
+			<label for="PASSWD">
+				<strong>PASSWORD : </strong>
+			</label>
+			<input type="password" id="PASSWD" size="12"/>
+			,&nbsp;&nbsp;
+			<label for="CPASSWD">
+				<strong>
+					CONFIRM : 
+				</strong>
+			</label>
+			<input type="password" id="CPASSWD" size="12"/>
+		</p>
+		<p>
+			<label for="PHONE">
+				<strong> PHONE : </strong>
+			</label>
+			<input type="tel" id="PHONE" class="tb_form tb_font"/>
+			,&nbsp;&nbsp;
+			<label for="EMAIL">
+				<strong> EMAIL : </strong>
+			</label>
+			<input type="tel" id="EMAIL" class="tb_form tb_font"/>
+		</p>
+	</div>
+</div>

@@ -1,0 +1,23 @@
+<link href="css/carofat/carofat.css" rel="stylesheet"/>
+<script type="text/javascript" src="js/carofat/carofat.js"></script>
+<!-- Form Content -->
+<div id="CAROFAT-FORM-CONT" class="tabs-bottom">
+	<ul>
+		<li><a href="#carofat-import">IMPORT</a></li>
+		<li><a href="#carofat-reconcile">RECONCILE</a></li>
+		<li><a href="#carofat-adjustment">ADJUSTMENT</a></li>
+		<li><a href="#carofat-history">HISTORY</a></li>
+	</ul>
+	<div id="carofat-import">
+		<div id="content"></div>
+	</div>
+	<div id="carofat-reconcile">
+		<div id="content"></div>
+	</div>
+	<div id="carofat-adjustment">
+		<div id="content"></div>
+	</div>
+	<div id="carofat-history">
+		<div id="content"></div>
+	</div>
+</div>

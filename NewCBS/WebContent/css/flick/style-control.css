@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+#login_dialog{
+	margin:150px 300px 150px 300px;
+	width:500px;
+	height:300px;
+	box-shadow: 10px 10px 5px #888888;
+}
+
+.login_element{
+	text-align:center;
+}
+
+.space_element{
+	margin-left : 40px;
+}
+
+#login_level{
+	align-text : right;
+}
+
+#logInButton{
+	margin-left : 200px;
+}
+
+.form_element{
+	margin : 10px;
+}

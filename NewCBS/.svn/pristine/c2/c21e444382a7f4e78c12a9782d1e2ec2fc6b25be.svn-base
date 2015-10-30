@@ -1,0 +1,22 @@
+<link type="css/text" href="css/marofat/marofat.css" rel="stylesheet"/>
+<script type="text/javascript" src="js/marofat/marofat.js"></script>
+<div id="MAROFAT-FORM-CONT" class="tabs-bottom">
+	<ul>
+		<li><a href="#marofat-import">IMPORT</a></li>
+		<li><a href="#marofat-reconcile">RECONCILE</a></li>
+		<li><a href="#marofat-adjustment">ADJUSTMENT</a></li>
+		<li><a href="#marofat-history">HISTORY</a></li>
+	</ul>
+	<div id="marofat-import">
+		<div id="content"></div>
+	</div>
+	<div id="marofat-reconcile">
+		<div id="content"></div>
+	</div>
+	<div id="marofat-adjustment">
+		<div id="content"></div>
+	</div>
+	<div id="marofat-history">
+		<div id="content"></div>
+	</div>
+</div>

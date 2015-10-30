@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+		
+	<bean id="carofatImport" class="bcel.cardcenter.cbs.carofat.action.upload.CarofatImportAction" scope="prototype">
+		<property name="cupTxnUtil" ref="cupTxnUtil"/>
+	</bean>
+	
+	<bean id="cupTxnUtil" class="bcel.cardcenter.cbs.carofat.utility.CupTxnUtilImp" scope="prototype">
+		<property name="cupTxnSettlementState" ref="cupTxnSettlementState"/>
+		<property name="cupTxnStatementState" ref="cupTxnStatementState"/>
+	</bean>
+	
+	<bean id="cupTxnSettlementState" class="bcel.cardcenter.cbs.carofat.utility.CupTxnSettlementState">
+		<property name="cupTxnSettlementReader" ref="settlementReader"/>
+		<property name="cupTxnSettleDao" ref="cupTxnSettleDao"/>
+		<property name="cupFtpFileAccessor" ref="cupFtpFileAccessor"/>
+	</bean>
+	<bean id="cupTxnStatementState" class="bcel.cardcenter.cbs.carofat.utility.CupTxnStatementState">
+		<property name="cupTxnStatementReader" ref="statementReader"/>
+		<property name="cupTxnStateDao" ref="cupTxnStateDao"/>
+		<property name="cupFtpFileAccessor" ref="cupFtpFileAccessor"/>
+	</bean>
+	<bean id="settlementReader" class="bcel.cardcenter.cbs.carofat.utility.CupTxnSettlementReader"/>
+	<bean id="statementReader" class="bcel.cardcenter.cbs.carofat.utility.CupTxnStatementReader"/>
+	<bean id="cupFtpFileAccessor" class="bcel.cardcenter.cbs.carofat.utility.FTPFileAccessorImp">
+		<property name="host" value="172.16.3.157"/>
+		<property name="port" value="21"/>
+		<property name="user" value="admin"/>
+		<property name="passwd" value="bcel123?"/>
+		<property name="workPath" value="/opt/cuptmp"/>
+		<property name="localPath" value="C:\Users\phoud\Documents\Report"/>
+	</bean>
+	<bean id="cupTxnStateDao" parent="transactionProxy">
+		<property name="target" ref="cupTxnStateDaoImp"/>
+	</bean>
+	<bean id="cupTxnStateDaoImp" class="bcel.cardcenter.cbs.carofat.dao.CupTxnStateDaoImp">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="cupTxnSettleDao" parent="transactionProxy">
+		<property name="target" ref="cupTxnSettleDaoImp"/>
+	</bean>
+	<bean id="cupTxnSettleDaoImp" class="bcel.cardcenter.cbs.carofat.dao.CupTxnSettleDaoImp">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+</beans>

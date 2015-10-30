@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- carofat upload -->
+	<bean id="carofatImport" class="bcel.cardcenter.cbs.carofat.action.upload.CarofatImportAction" scope="prototype"/>
+	<bean id="ftpFileCopy" class="bcel.cardcenter.cbs.carofat.utility.FTPFileCopyImp" scope="prototype">
+		<property name="host" value="172.16.3.157"/>
+		<property name="port" value="21"/>
+		<property name="user" value="admin"/>
+		<property name="passwd" value="bcel123?"/>
+		<property name="workPath" value="/opt/cuptmp"/>
+		<property name="localPath" value="C:\Users\phoud\Documents\Report"/>
+	</bean>
+	<!-- get ATM id action -->
+	<bean id="cupTxnUploadAction" class="bcel.cardcenter.cbs.carofat.reconcile.action.CupTxnUploadAction" scope="prototype">
+		<property name="cupTxnUtil" ref="cupTxnUtil"/>
+	</bean>
+	
+	<bean id="cupTxnReconcileAction" class="bcel.cardcenter.cbs.carofat.reconcile.action.CupTxnReconcileAction" scope="prototype">
+		<property name="cupTxnUtil" ref="cupTxnUtil"/>
+	</bean>
+	
+	<bean id="cupTxnHistory" class="bcel.cardcenter.cbs.carofat.reconcile.action.CupTxnHistoryAction" scope="prototype">
+		<property name="cupTxnUtil" ref="cupTxnUtil"/>
+	</bean>
+	
+	<bean id="viewTxnAction" class="bcel.cardcenter.cbs.carofat.reconcile.action.CupTxnEditDataAction" scope="prototype">
+		<property name="cupTxnUtil" ref="cupTxnUtil"/>
+	</bean>
+	<bean id="cupTxnUtil" parent="loggingProxy">
+		<property name="target" ref="cupTxnUtilImp"/>
+	</bean>
+	<bean id="cupTxnUtilImp" class="bcel.cardcenter.cbs.carofat.utility.CupTxnUtilImp">
+		<property name="cupTxnDao" ref="cupTxnDao"/>
+	</bean>
+	<bean id="cupTxnDao" parent="loggingProxy">
+		<property name="target" ref="cupTxnDaoImp"/>
+	</bean>
+	<bean id="cupTxnDaoImp" class="bcel.cardcenter.cbs.carofat.dao.CupTxnDaoImp">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+</beans>

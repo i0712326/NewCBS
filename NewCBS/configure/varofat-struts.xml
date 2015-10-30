@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="varofat" namespace="/varofat" extends="cbs_package">
+		<!-- adjustment -->
+		<action name="adjustment" class="adjustmentAction" method="getVisaAtmList">
+			<result name="success">
+				response/adjustment/adjustmentXml.jsp
+			</result>
+			<result name="error">
+				response/adjustment/adjustmentXml.jsp
+			</result>
+		</action>
+		<action name="update" class="adjustmentAction" method="updateStatus">
+			<result name="success">
+				response/adjustment/updateXml.jsp
+			</result>
+			<result name="error">
+				response/adjustment/updateXml.jsp
+			</result>
+		</action>
+		<!-- history -->
+		<action name="history" class="historyAction" method="getVisaList">
+			<result name="success">
+				response/history/historyXml.jsp
+			</result>
+			<result name="error">
+				response/history/historyXml.jsp
+			</result>
+		</action>
+	</package>
+</struts>

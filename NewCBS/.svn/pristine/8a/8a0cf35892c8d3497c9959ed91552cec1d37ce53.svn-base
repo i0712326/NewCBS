@@ -1,0 +1,78 @@
+package bcel.cardcenter.cbs.carofat.utility;
+
+import java.io.File;
+import java.sql.Date;
+import java.util.List;
+
+import bcel.cardcenter.cbs.carofat.dao.CupTxnDao;
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class CupTxnUtilImp implements CupTxnUtil {
+	private CupTxnDao cupTxnDao;
+	private CupTxnFileReader cupTxnFileReader;
+	public void setCupTxnDao(CupTxnDao cupTxnDao){
+		this.cupTxnDao = cupTxnDao;
+	}
+	public CupTxnFileReader getCupTxnFileReader(String option, File file, Date date){
+		if(option.equals("state"))
+			cupTxnFileReader = new CupTxnStatementReader(file);
+		else
+			cupTxnFileReader = new CupTxnSettlementReader(file, date);
+		
+		return cupTxnFileReader;
+	}
+	@Override
+	public void saveAll(List<CupTxn> cupTxns){
+		this.cupTxnDao.saveOrUpdateAll(cupTxns);
+	}
+	@Override
+	public void insertAll(List<CupTxn> cupTxns) {
+		this.cupTxnDao.insertOrUpdateAll(cupTxns);
+	}
+	@Override
+	public List<CupTxn> reconcileState() {
+		return this.cupTxnDao.reconcileState();
+	}
+	@Override
+	public List<CupTxn> reconcileSettle() {
+		return this.cupTxnDao.reconcileSettle();
+	}
+	
+	@Override
+	public List<CupTxn> getSettle() {
+		return this.cupTxnDao.getSettle();
+	}
+	@Override
+	public List<CupTxn> getState() {
+		return this.cupTxnDao.getState();
+	}
+	@Override
+	public boolean validatDate(Date date) {
+		return cupTxnDao.validateDate(date);
+	}
+	@Override
+	public boolean validatUploadDateType(Date txnDate, String option) {
+		return cupTxnDao.validateUploadDateType(txnDate, option);
+	}
+	@Override
+	public List<CupTxn> getCupTxnByTraceOption(String trace, String option) {
+		return cupTxnDao.searchTxnByTraceOption(trace,option);
+	}
+	@Override
+	public List<CupTxn> getTxnByDateOption(Date sqlDate, String option) {
+		return cupTxnDao.searchTxnbyDateOption(sqlDate,option);
+	}
+	@Override
+	public void update(CupTxn cup, String option) {
+		cupTxnDao.update(cup,option);
+	}
+	@Override
+	public void delete(CupTxn cup, String option) {
+		cupTxnDao.delete(cup,option);
+	}
+	@Override
+	public int updateCupTxnStatus() {
+		
+		return cupTxnDao.updatCupTxnStatus();
+	}
+}

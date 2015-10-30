@@ -1,0 +1,29 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import oracle.jdbc.OracleTypes;
+
+import org.hibernate.jdbc.Work;
+
+public class BatchUpdateWork implements Work {
+	private int num;
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	@Override
+	public void execute(Connection conn) throws SQLException {
+		String sql = "{ ? = call CBSPACKAGE.UPDATECUPTXN_STATUS }";
+		CallableStatement call = conn.prepareCall(sql);
+		call.registerOutParameter(1, OracleTypes.INTEGER);
+		call.execute();
+		int ret = (int) call.getObject(1);
+		setNum(ret);
+	}
+
+}

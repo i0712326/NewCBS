@@ -1,0 +1,128 @@
+package bcel.cardcenter.cbs.carofat.reconcile.action;
+
+import java.util.List;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+import bcel.cardcenter.cbs.carofat.utility.CupTxnUtil;
+
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+public class CupTxnEditDataAction extends ActionSupport implements ModelDriven<CupTxn>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// input for search
+	private String trace;
+	private String option;
+	// output for search
+	private List<CupTxn> cupTxns;
+	
+	// Business logic
+	private CupTxnUtil cupTxnUtil;
+	
+	// error message
+	private String response;
+	private String message;
+	
+	public String getTrace() {
+		return trace;
+	}
+	public void setTrace(String trace) {
+		this.trace = trace;
+	}
+	public String getOption() {
+		return option;
+	}
+	public void setOption(String option) {
+		this.option = option;
+	}
+	// output
+	public List<CupTxn> getCupTxns() {
+		return cupTxns;
+	}
+	public void setCupTxns(List<CupTxn> cupTxns) {
+		this.cupTxns = cupTxns;
+	}
+	// response and message
+	public String getMessage() {
+		return message;
+	}
+	public String getResponse() {
+		return response;
+	}
+	public void setResponse(String response) {
+		this.response = response;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	// business logic
+	public CupTxnUtil getCupTxnUtil() {
+		return cupTxnUtil;
+	}
+	public void setCupTxnUtil(CupTxnUtil cupTxnUtil) {
+		this.cupTxnUtil = cupTxnUtil;
+	}
+	// view date
+	public String view(){
+		try{
+			setCupTxns(cupTxnUtil.getCupTxnByTraceOption(trace, option));
+			if(getCupTxns().size()==0){
+				setResponse(ERROR);
+				setMessage("No Data Found");
+				return ERROR;
+			}
+			setResponse(SUCCESS);
+			return SUCCESS;
+		}
+		catch(Exception ex){
+			setResponse(ERROR);
+			setMessage(ex.getMessage());
+			return ERROR;
+		}
+	}
+	
+	//update
+	private CupTxn cup;
+	
+	public CupTxn getCup() {
+		return cup;
+	}
+	public void setCup(CupTxn cup) {
+		this.cup = cup;
+	}
+	public String update(){
+		try{
+			cupTxnUtil.update(cup,option);
+			setResponse(SUCCESS);
+			return SUCCESS;
+		}
+		catch(Exception ex){
+			setResponse(SUCCESS);
+			setMessage(ex.getMessage());
+			return ERROR;
+		}
+	}
+	
+	// delete
+	
+	public String delete(){
+		try{
+			cupTxnUtil.delete(cup,option);
+			setResponse(SUCCESS);
+			return SUCCESS;
+		}
+		catch(Exception ex){
+			setResponse(ERROR);
+			setMessage(ex.getMessage());
+			return ERROR;
+		}
+	}
+	@Override
+	public CupTxn getModel() {
+		return cup;
+	}
+}

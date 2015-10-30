@@ -1,0 +1,58 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class BatchInsertCallback implements HibernateCallback {
+	private List<CupTxn> cups;
+	public BatchInsertCallback(List<CupTxn> cups){
+		this.cups = cups;
+	}
+	@Override
+	public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+		try{
+		String sql = "INSERT INTO CUPTXN_STATE (TXNDATE, CARD, TRACE, AMOUNT, FEE, NET, TXNTYPE, STATUS) VALUES" +
+				"(:date,:card,:trace,:amount,:fee,:net,:txnType,:status)";
+		SQLQuery sqlQuery = session.createSQLQuery(sql);
+		Transaction tx = session.beginTransaction();
+		int i=1;
+		for (CupTxn cup : cups) {
+			sqlQuery.setDate("date", cup.getDate());
+			sqlQuery.setString("card", cup.getCard());
+			sqlQuery.setString("trace", cup.getTrace());
+			sqlQuery.setDouble("amount", cup.getAmount());
+			sqlQuery.setDouble("fee", cup.getFee());
+			sqlQuery.setDouble("net", cup.getNet());
+			sqlQuery.setString("txnType",cup.getTxnType());
+			sqlQuery.setString("status", cup.getStatus());
+			if(Math.abs(cup.getNet())>0)
+				sqlQuery.executeUpdate();
+		    if ( i % 20 == 0 ) { 
+		    	//20, same as the JDBC batch size
+		        //flush a batch of inserts and release memory
+		        session.flush();
+		        session.clear();
+		    }
+		    i++;
+		}
+		   
+		tx.commit();
+		session.close();
+		return new Boolean(true);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			return new Boolean(false);
+		}
+	}
+
+}

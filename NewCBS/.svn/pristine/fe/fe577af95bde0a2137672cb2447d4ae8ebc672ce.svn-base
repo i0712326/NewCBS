@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<%@ page language="java" contentType="text/xml; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<data>
+	<header>
+		<result>
+			<s:property value="result"/>
+		</result>
+		<message>
+			<s:property value="message"/>
+		</message>
+		<extend>
+			<page>
+				<property value="page"/>
+			</page>
+			<total>
+				<property value="total"/>
+			</total>
+			<records>
+				<property value="records"/>
+			</records>
+		</extend>
+	</header>
+	<entities>
+		<s:iterator value="settle" status="stat">
+			<entity id="<s:property value="#stat.count"/>">
+				<date>
+					<s:date name="date" format="MM/dd/yyyy"/>
+				</date>
+				<card>
+					<s:property value="card"/>
+				</card>
+				<trace>
+					<s:property value="trace"/>
+				</trace>
+				<amount>
+					<s:text name="format.money">
+						<s:param name="value" value="amount"/>
+					</s:text>
+				</amount>
+				<fee>
+					<s:text name="format.money">
+						<s:param name="value" value="fee"/>
+					</s:text>
+				</fee>
+				<net>
+					<s:text name="format.money">
+						<s:param name="value" value="net"/>
+					</s:text>
+				</net>
+				<apprcode>
+					<s:property value="apprcode"/>
+				</apprcode>
+				<type>
+					<s:property value="txnType"/>
+				</type>
+				<merchant>
+					<s:property value="merchant"/>
+				</merchant>
+				<terminalId>
+					<s:property value="terminalId"/>
+				</terminalId>
+				<address>
+					<s:property value="address"/>
+				</address>
+				<country>
+					<s:property value="country"/>
+				</country>
+			</entity>
+		</s:iterator>
+	</entities>
+</data>

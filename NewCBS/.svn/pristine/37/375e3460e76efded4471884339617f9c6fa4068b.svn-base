@@ -1,0 +1,15 @@
+package bcel.cardcenter.cbs.carofat.utility;
+
+import java.sql.Date;
+import java.util.List;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxnSettle;
+import bcel.cardcenter.cbs.carofat.entity.CupTxnState;
+
+public interface CupTxnUtil {
+	public void upload(String option, Date date) throws Exception;
+	public void confirm(String option) throws Exception;
+	public List<CupTxnSettle> getTmpSettles(String option, Date date, int first, int max) throws Exception;
+	public List<CupTxnState> getTmpStates(String option, Date date, int first, int max) throws Exception;
+	public int getSize(String option);
+}

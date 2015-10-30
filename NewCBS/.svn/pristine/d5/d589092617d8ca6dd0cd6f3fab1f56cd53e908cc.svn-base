@@ -1,0 +1,35 @@
+<script type="text/javascript" src="js/carofat/adjustment.js"></script>
+<div id="CAROFAT-ADJUSTMENT">
+	<p>
+		<label for="CADATE">
+			<strong>DATE : </strong>
+		</label>
+		<input type="text" id="CADATE" name="DATE" size="10"/>
+		<label for="CAOPTION">
+			<strong> OPTION : </strong>
+		</label>
+		<select id="CAOPTION" name="OPTION">
+			<option value="">SELECT</option>
+			<option value="state">STATE</option>
+			<option value="settle">SETTLE</option>
+		</select>
+		<button id="CASEARCH">search</button>
+		<button id="CAUPDATE">update</button>
+		<button id="CADELETE">delete</button>
+	</p>
+	<p>
+		<label for="CACARD">
+			<strong>CARD : </strong>
+		</label>
+		<input type="text" id="CACARD" name="CARD" value="%" size="12"/>
+		,&nbsp;&nbsp;
+		<label for="CATRACE">
+			<strong>TRACE : </strong>
+		</label>
+		<input type="text" id="CATRACE" name="TRACE" value="%" size="12"/>
+	</p>
+</div>
+<div id="CARET">
+	<table id="CATABLE"></table>
+	<div id="CAPAGER"></div>
+</div>

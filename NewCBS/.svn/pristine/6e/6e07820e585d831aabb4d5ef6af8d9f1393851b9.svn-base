@@ -1,0 +1,102 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import oracle.jdbc.OracleTypes;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.jdbc.Work;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class TxnByTraceOptionCallback implements HibernateCallback {
+	private String trace;
+	private String option;
+	
+	public TxnByTraceOptionCallback(String trace, String option) {
+		super();
+		this.trace = trace;
+		this.option = option;
+	}
+
+	@Override
+	public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+		TxnByTraceOptionWork work = new TxnByTraceOptionWork(trace,option);
+		session.doWork(work);
+		return work.getCups();
+	}
+	
+	private class TxnByTraceOptionWork implements Work{
+		private String trace;
+		private String option;
+		private List<CupTxn> cups; 
+		public TxnByTraceOptionWork(String trace, String option) {
+			this.trace = trace;
+			this.option = option;
+		}
+		public List<CupTxn> getCups() {
+			return cups;
+		}
+		public void setCups(List<CupTxn> cups) {
+			this.cups = cups;
+		}
+		@Override
+		public void execute(Connection conn) throws SQLException {
+			String sql = "{ ? = call CBSPACKAGE.GETCUPBYTRACEOPTION(?,?)}";
+			CallableStatement call = conn.prepareCall(sql);
+			call.registerOutParameter(1, OracleTypes.CURSOR);
+			call.setString(2, trace);
+			call.setString(3, option);
+			call.execute();
+			ResultSet rs = (ResultSet) call.getObject(1);
+			List<CupTxn> cups = new ArrayList<CupTxn>();
+			while(rs.next()){
+				Date date = rs.getDate("TXNDATE");
+				String card = rs.getString("CARD");
+				double amount = rs.getDouble("AMOUNT");
+				double fee	= rs.getDouble("FEE");
+				double net	= rs.getDouble("NET");
+				String trace = rs.getString("TRACE");
+				CupTxn	cup = new CupTxn();
+				cup.setDate(date);
+				cup.setCard(card);
+				cup.setAmount(amount);
+				cup.setFee(fee);
+				cup.setNet(net);
+				cup.setTrace(trace);
+				
+				if(option.equals("settle")){
+					String apprcode = rs.getString("APPRCODE");
+					String terminalId = rs.getString("TERMINALID");
+					String merchant	 = rs.getString("MERCHANT");
+					String address	= rs.getString("ADDRESS");
+					String country	= rs.getString("COUNTRY");
+					String txnType	= rs.getString("TXNTYPE");
+					String status	= rs.getString("STATUS");
+					cup.setApprCode(apprcode);
+					cup.setTerminalId(terminalId);
+					cup.setMerchant(merchant);
+					cup.setAddress(address);
+					cup.setCountry(country);
+					cup.setTxnType(txnType);
+					cup.setStatus(status);
+				}
+				
+				
+				cups.add(cup);
+			}
+			setCups(cups);
+		}
+		
+		
+	}
+}

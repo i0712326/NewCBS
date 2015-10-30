@@ -1,0 +1,38 @@
+<script type="text/javascript" src="js/varofat/history.js"></script>
+<div id="VAROFAT-HISTORY" style="height:144px;">
+	<p>
+		<label>
+			<strong> SETTLE DATE : </strong>
+		</label>
+		<input type="text" id="DATE" name="DATE" class="tb_from" style="width:90px;text-align:right;"/>
+		,&nbsp;&nbsp;
+		<label for="OPT">
+			<strong>OPTION : </strong>
+		</label>
+		<select id="OPT" name="OPTION">
+			<option value="">select</option>
+			<option value="00">CREDIT</option>
+			<option value="01">DEBIT</option>
+			<option value="02">REVERSAL</option>
+			<option value="03">CHARGEBACK</option>
+			<option value="04">REPRESENT</option>
+		</select>
+	</p>
+	<p>
+		<label for="REF">
+			<strong>RETR.NO : </strong>
+		</label>
+		<input type="text" id="REF" name="REFERENCE" value="%" class="tb_from" style="width:100px;"/>
+		,&nbsp;&nbsp;
+		<label for="CARD">
+			<strong>CARD : </strong>
+		</label>
+		<input type="text" id="CARD" name="CARDNUMBER" value="%" class="tb_from" style="width:100px;"/>
+		<button id="SEARCH">Search</button>
+	</p>
+</div>
+<!--  Table content -->
+<div id="VHRET">
+	<table id="VHTABLE"></table>
+	<div id="VHPAGER"></div>
+</div>

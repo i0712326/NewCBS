@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.custom.i18n.resources" value="MessageResources" />
+	
+	<package name="cbs_package" extends="struts-default" abstract="true">
+		
+		<global-results>
+			<result name="error">
+				/error.html
+			</result>
+			<result name="sqlError">
+				/error.html
+			</result>
+		</global-results>
+		
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"/>
+			<exception-mapping result="sqlError" exception="java.sql.SQLException"></exception-mapping>
+		</global-exception-mappings>
+		
+		<action name="index">
+			<result>/default.jsp</result>
+		</action>
+		
+	</package>
+	<include file="atm-struts.xml"></include>
+	<include file="carofat-struts.xml"></include>
+	<include file="varofat-struts.xml"></include>
+</struts>

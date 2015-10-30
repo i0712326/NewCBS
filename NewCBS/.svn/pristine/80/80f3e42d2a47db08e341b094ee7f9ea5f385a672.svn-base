@@ -1,0 +1,26 @@
+<script type="text/javascript" src="js/carofat/reconcile.js"></script>
+<div id="CAROFAT-RECONCILE">
+	<p>
+		<label for="RDATE">
+			<strong>DATE : </strong>
+		</label>
+		<input type="text" id="RDATE" name="DATE" size="12"/>
+		<button id="SUBBUTTON">Submit</button>
+		<button id="CONBUTTON">Confirm</button>
+	</p>
+</div>
+<div id="CRRET">
+	<ul>
+		<li><a href="#CRRET-STATE">STATE</a></li>
+		<li><a href="#CRRET-SETTLE">SETTLE</a></li>
+	</ul>
+	<div id="CRRET-STATE">
+		<table id="CRSTTABLE"></table>
+		<div id="CRSTPAGER"></div>
+	</div>
+	<div id="CRRET-SETTLE">
+		<table id="CRSETABLE"></table>
+		<div id="CRSEPAGER"></div>
+	</div>
+</div>
+

@@ -1,0 +1,43 @@
+<script type="text/javascript" src="js/marofat/import.js"></script>
+<div id="MAROFAT-IMPORT-FORM">
+	<p>
+		<label for="MIMREC">
+			<strong>RECORD : </strong>
+		</label>
+		<input type="text" id="MIMREC" name="RECORD" value="0" class="tb_from" style="width:60px;text-align:right;"/>
+		,&nbsp;&nbsp;
+		<label for="MIMDATE">
+			<strong>DATE :</strong>
+		</label>
+		<input type="text" id="MIMDATE" name="DATE" value="" class="tb_from" style="width:90px;text-align:right;"/>
+		<button id="MIMSUBMIT">Submit</button>
+		<button id="MIMCONFIRM">Confirm</button>
+	</p>
+	<p>
+		<label for="MIMOPTION"> 
+			<strong>
+				OPTION : 
+			</strong>
+		</label>
+		<select id="MIMOPTION" name="OPTION">
+			<option value="">select</option>
+			<option value="state">STATE</option>
+			<option value="settle">SETTLE</option>
+		</select>
+		<input type="file" id="MIMFILE" name="FILE"/>
+	</p>
+</div>
+<div id="MIRET">
+	<ul>
+		<li><a href="#tab-settle">SETTLEMENT</a></li>
+		<li><a href="#tab-state">STATEMENT</a></li>
+	</ul>
+	<div id="tab-settle">
+		<table id="MISETABLE"></table>
+		<div id="MISEPAGER"></div>
+	</div>
+	<div id="tab-state">
+		<table id="MISTTABLE"></table>
+		<div id="MISTPAGER"></div>
+	</div>
+</div>

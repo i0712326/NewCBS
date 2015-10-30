@@ -1,0 +1,26 @@
+<script type="text/javascript" src="js/varofat/reconcile.js"></script>
+<div id="VAROFAT-RECON" style="height:80px;">
+	<p>
+		<label for="PROCESSDATE">
+			<strong>DATE : </strong>
+		</label>
+		<input type="text" id="PROCESSDATE" name="DATE" class="tb_from" style="width:90px;text-align:right;"/>
+		&nbsp;&nbsp;
+		<button id="RECON">Process</button>
+		<button id="UPDATE">Update</button>
+	</p>
+</div>
+<div id="VRRET">
+	<ul>
+		<li><a href="#tab-settle">SETTLE</a></li>
+		<li><a href="#tab-state">STATE</a></li>
+	</ul>
+	<div id="tab-settle">
+		<table id="VRSETABLE"></table>
+		<div id="VRSEPAGER"></div>
+	</div>
+	<div id="tab-state">
+		<table id="VRSTTABLE"></table>
+		<div id="VRSTPAGER"></div>
+	</div>
+</div>

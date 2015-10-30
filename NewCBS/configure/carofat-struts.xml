@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="carofat" namespace="/carofat" extends="cbs_package">
+		
+		<!-- data import -->
+		
+		<action name="carofat.import" class="carofatImport" method="uploadFile">
+			<result name="success" type="dispatcher">
+				response/import/import-result.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/import/import-result.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.import.confirm" class="carofatImport" method="confirmUpload">
+			<result name="success" type="dispatcher">
+				response/import/confirm-result.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/import/confirm-result.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.import.cancel" class="carofatImport" method="cancelCupTxn">
+			<result name="success" type="dispatcher">
+				response/import/delete-result.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/import/delete-result.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.import.getsettle" class="carofatImport" method="getCupTxnSettles">
+			<result name="success" type="dispatcher">
+				response/import/cupTxnSettleView.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/import/cupTxnSettleView.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.import.getstate" class="carofatImport" method="getCupTxnStates">
+			<result name="success" type="dispatcher">
+				response/import/cupTxnStateView.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/import/cupTxnStateView.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.import.retreivesettle" class="carofatImport" method="retreiveCupSettles">
+			<result name="success" type="dispatcher">
+				response/import/cupSettles.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/import/cupSettles.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.import.retreivestate" class="carofatImport" method="retreiveCupStates">
+			<result name="success" type="dispatcher">
+				response/import/cupStates.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/import/cupStates.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.import.get.temp.states" class="carofatImport" method="downloadTmpState">
+			<result name="success" type="dispatcher">
+				response/import/export-result.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/import/export-result.jsp
+			</result>
+			<!-- 
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+			  	<param name="inputName">fileInputStream</param>
+			  	<param name="contentDisposition">attachment;${ contentDisposition }</param>
+			  	<param name="bufferSize">1024</param>
+			  	<param name="contentLength">${ contentLength }</param>
+			</result>
+			-->
+		</action>
+		
+		<action name="carofat.import.get.temp.settles" class="carofatImport" method="downloadTmpSettle">
+			<result name="success" type="dispatcher">
+				response/import/export-result.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/import/export-result.jsp
+			</result>
+			<!--
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+			  	<param name="inputName">fileInputStream</param>
+			  	<param name="contentDisposition">attachment;${ contentDisposition }</param>
+			  	<param name="bufferSize">1024</param>
+			  	<param name="contentLength">${ contentLength }</param>
+			</result>
+			-->
+		</action>
+		
+		<!-- reconcile -->
+		
+		<action name="carofat.reconcile.result" class="carofatReconcile" method="reconcile">
+			<result name="success" type="dispatcher">
+				response/reconcile/reconcile-result.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/reconcile/reconcile-result.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.getsettle.reconcile" class="carofatReconcile" method="getTempSettle">
+			<result name="success" type="dispatcher">
+				response/reconcile/reconcile-settle.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/reconcile/reconcile-settle.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.getstate.reconcile" class="carofatReconcile" method="getTempState">
+			<result name="success" type="dispatcher">
+				response/reconcile/reconcile-state.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/reconcile/reconcile-state.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.reconcile.confirm" class="carofatReconcile" method="confirm">
+			<result name="success" type="dispatcher">
+				response/reconcile/reconcile-confirm.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/reconcile/reconcile-confirm.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.reconcile.getreconsettle" class="carofatReconcile" method="getReconSettles">
+			<result name="success" type="dispatcher">
+				response/reconcile/reconcile-settle-result.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/reconcile/reconcile-settle-result.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.reconcile.getreconstate" class="carofatReconcile" method="getReconStates">
+			<result name="success" type="dispatcher">
+				response/reconcile/reconcile-state-result.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/reconcile/reconcile-state-result.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.reconcile.cancel" class="carofatReconcile" method="cancel">
+			<result name="success" type="dispatcher">
+				response/reconcile/reconcile-cancel.jsp
+			</result>
+			<result name="success" type="dispatcher">
+				response/reconcile/reconcile-cancel.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.reconcile.get.temp.states" class="carofatReconcile" method="downloadTmpState">
+			<result name="success" type="dispatcher">
+				response/reconcile/export-result.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/reconcile/export-result.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.reconcile.get.temp.settles" class="carofatReconcile" method="downloadTmpSettle">
+			<result name="success" type="dispatcher">
+				response/reconcile/export-result.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/reconcile/export-result.jsp
+			</result>
+		</action>
+		
+		<!-- adjustment action -->
+		
+		<action name="carofat.adjustment.search.state" class="carofatAdjustment" method="getdatastates">
+			<result name="success" type="dispatcher">
+				response/adjustment/statement.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/adjustment/statement.jsp
+			</result>
+		</action>
+		<action name="carofat.adjustment.search.settle" class="carofatAdjustment" method="getdatasettles">
+			<result name="success" type="dispatcher">
+				response/adjustment/settlement.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/adjustment/settlement.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.adjustment.update" class="carofatAdjustment" method="updatedata">
+			<result name="success" type="dispatcher">
+				response/adjustment/update-result.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/adjustment/update-result.jsp
+			</result>
+		</action>
+		<!-- history action -->
+		
+		<action name="carofat.history.getstates" class="carofatHistory" method="getstates">
+			<result name="success" type="dispatcher">
+				response/history/statement.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/history/statement.jsp
+			</result>
+		</action>
+		
+		<action name="carofat.history.getsettles" class="carofatHistory" method="getsettles">
+			<result name="success" type="dispatcher">
+				response/history/settlement.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/history/settlement.jsp
+			</result>
+		</action>
+		
+		<!-- download file -->
+		
+		<action name="cupTxnDownload" class="cupTxnUploadAction" method="downloadTmpState">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+			  	<param name="inputName">fileInputStream</param>
+			  	<param name="contentDisposition">attachment;${ contentDisposition }</param>
+			  	<param name="bufferSize">1024</param>
+			  	<param name="contentLength">${ contentLength }</param>
+			</result>
+		</action>
+		
+		
+		
+		
+		
+		
+		<!-- persist records -->
+		<action name="persist" class="cupTxnUploadAction" method="persist">
+			<result name="success" type="dispatcher">
+				/success.html
+			</result>
+			<result name="error" type="dispatcher">
+				/error.html
+			</result>
+		</action>
+		<!-- reconcile -->
+		<action name="reconcile" class="cupTxnReconcileAction" method="reconcile">
+			<result name="success" type="dispatcher">
+				response/cupTxnReconXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/processResXml.jsp
+			</result>
+		</action>
+		<action name="viewstate" class="cupTxnReconcileAction" method="viewState">
+			<result name="success" type="dispatcher">
+				response/cupTxnStateView.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/processResXml.jsp
+			</result>
+		</action>
+		<action name="viewsettle" class="cupTxnReconcileAction" method="viewSettle">
+			<result name="success" type="dispatcher">
+				response/cupTxnSettleView.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/processResXml.jsp
+			</result>
+		</action>
+		<action name="download" class="cupTxnReconcileAction" method="download">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+			  	<param name="inputName">fileInputStream</param>
+			  	<param name="contentDisposition">attachment;${ contentDisposition }</param>
+			  	<param name="bufferSize">1024</param>
+			  	<param name="contentLength">${ contentLength }</param>
+			</result>
+		</action>
+		<action name="updateCupTxnStatus" class="cupTxnReconcileAction" method="update">
+			<result name="success" type="dispatcher">
+				response/processResXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/processResXml.jsp
+			</result>
+		</action>
+		<!-- action for adjust data -->
+		<action name="viewTxn" class="viewTxnAction" method="view">
+			<result name="success" type="dispatcher">
+				response/viewResXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/viewResXml.jsp
+			</result>
+		</action>
+		<action name="updateTxn" class="viewTxnAction" method="update">
+			<result name="success" type="dispatcher">
+				response/cupTxnDeleteUpdateXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/cupTxnDeleteUpdateXml.jsp
+			</result>
+		</action>
+		<action name="deleteTxn" class="viewTxnAction" method="delete">
+			<result name="success" type="dispatcher">
+				response/cupTxnDeleteUpdateXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/cupTxnDeleteUpdateXml.jsp
+			</result>
+		</action>
+		<!--  action for history	-->
+		<action name="getHistory" class="cupTxnHistory" method="getReport">
+			<result name="success" type="dispatcher">
+				response/historyResXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/historyResXml.jsp
+			</result>
+		</action>
+		<action name="viewHistory" class="cupTxnHistory" method="view">
+			<result name="success" type="dispatcher">
+				response/historyRecXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/historyRecXml.jsp
+			</result>
+		</action>
+		<action name="historyDownload" class="cupTxnHistory" method="download">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+			  	<param name="inputName">fileInputStream</param>
+			  	<param name="contentDisposition">attachment;${ contentDisposition }</param>
+			  	<param name="bufferSize">1024</param>
+			  	<param name="contentLength">${ contentLength }</param>
+			</result>
+		</action>
+	</package>
+</struts>

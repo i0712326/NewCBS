@@ -1,0 +1,87 @@
+$(document).ready(function(){
+	var $carofatImp = $('#CAROFAT-IMPORT');
+	var $record     = $carofatImp.find('#RECORD');
+	var $date		= $carofatImp.find('#IDATE');
+	var $option		= $carofatImp.find('#OPTION');
+	var $submit		= $carofatImp.find('#CUPBUTTON');
+	var $confirm	= $carofatImp.find('#CONBUTTON');
+	var $ciret		= $('#CIRET');
+	var $ciTable	= $ciret.find('#CITABLE');
+	var $ciPager	= $ciret.find('#CIPAGER');
+	$date.datepicker({
+		showOn: "button",
+	    buttonImage: "css/img/calendar.gif",
+	    buttonImageOnly: true
+	});
+	
+	$submit.button();
+	$confirm.button();
+	$confirm.hide();
+	
+	$ciTable.jqGrid(carofatTableParam($ciPager,'IMPORT-RESULT'))
+	.navGrid('#CIPAGER',{edit:false,add:false,del:false,search:false})
+	.navButtonAdd('#CIPAGER',{
+		   caption:'',
+		   buttonicon:"ui-icon-arrowstop-1-s", 
+		   onClickButton: function(){ 
+		     alert("Adding Row");
+		   }, 
+		   position:"last"
+		});
+	// action
+	
+	$submit.click(function(){
+		var allFields = [$record,$date,$option];
+		var check = dataValidation(allFields);
+		if(check==true){
+			startProcessing();
+			var params = {'record':$record.val().trim(),'date':$date.val().trim(),'option':$option.val().trim()};
+			$.post('carofat/carofat.import.action',params,function(data){
+				endProcessing();
+				var result = $(data).find('result').text().trim();
+				if(result=='error'){
+					var code = $(data).find('message').text().trim();
+					var errors = [code];
+					openErrorResult(errors);
+				}
+				else{
+					
+				}
+			});
+		}
+	});
+	
+	
+});
+
+/*
+$('#CUPDOWNLOAD').live('click',function(){
+	var importdate = $('#CAROFAT-IMPORT-RET #IMPORTDATE').text().trim();
+	var format = 'pdf';
+	var option = $('#CAROFAT-IMPORT-RET #OPTION').text().trim();
+	var url = 'carofat/reconcile/cupTxnDownload.action';
+	var params = {'param.importDate':importdate,'param.format':format,'option':option};
+	submitValues(url,params); 
+});
+
+
+$('#CUPCONFIRM').live('click',function(){
+		$('#PROCESSDIALOG').dialog('open');
+		var url = 'carofat/reconcile/persist.action';
+		var option = $('#CAROFAT-IMPORT-RET #OPTION').text().trim();
+		var params = {option:option};
+		$.post(url,params,function(res){
+			$('#PROCESSDIALOG').dialog('close');
+			$('#CUPPERSIST-CONTENT').html(res);
+			$('#CUPPERSIST-DIALOG').dialog('open');
+		});
+});
+
+function submitValues(url, params) {
+    var form = [ '<form method="POST" action="', url, '">' ];
+    for(var key in params) 
+        form.push('<input type="hidden" name="', key, '" value="', params[key], '"/>');
+    form.push('</form>');
+    $(form.join('')).appendTo('#CUPDOWNFRAME').submit();
+}
+*/

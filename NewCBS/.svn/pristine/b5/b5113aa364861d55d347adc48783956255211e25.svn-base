@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<%@ page language="java" contentType="text/xml; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<rows>
+	<response>
+		<s:property value="response"/>
+	</response>
+	<message>
+		<s:property value="message"/>
+	</message>
+	<total>
+		<date>
+			<s:date name="date" format="MM/dd/yyyy"/>
+		</date>
+		<option>
+			<s:property value="option"/>
+		</option>
+		<number>
+			<s:text name="format.number">
+				<s:param name="value" value="totalNum"/>
+			</s:text>
+		</number>
+		<amount>
+			<s:text name="format.money">
+				<s:param name="value" value="totalAmount"/>
+			</s:text>
+		</amount>
+		<fee>
+			<s:text name="format.money">
+				<s:param name="value" value="totalFee"/>
+			</s:text>
+		</fee>
+		<net>
+			<s:text name="format.money">
+				<s:param name="value" value="totalNet"/>
+			</s:text>
+		</net>
+	</total>
+	<entities>
+		<s:iterator value="cupTxns" status="stat">
+			<entity id="<s:property value="#stat.count"/>">
+				<date>
+					<s:date name="date" format="MM/dd/yyyy"/>
+				</date>
+				<card>
+					<s:property value="card"/>
+				</card>
+				<trace>
+					<s:property value="trace"/>
+				</trace>
+				<apprcode>
+					<s:property value="apprCode"/>
+				</apprcode>
+				<type>
+					<s:property value="txnType"/>
+				</type>
+				<amount>
+					<s:text name="format.money">
+						<s:param name="value" value="amount"/>
+					</s:text>
+				</amount>
+				<fee>
+					<s:text name="format.money">
+						<s:param name="value" value="fee"/>
+					</s:text>
+				</fee>
+				<net>
+					<s:text name="format.money">
+						<s:param name="value" value="net"/>
+					</s:text>
+				</net>
+				<terminalId>
+					<s:property value="terminalId"/>
+				</terminalId>
+				<merchant>
+					<s:property value="merchant"/>
+				</merchant>
+				<address>
+					<s:property value="address"/>
+				</address>
+				<country>
+					<s:property value="country"/>
+				</country>
+			</entity>
+		</s:iterator>
+	</entities>
+</rows>

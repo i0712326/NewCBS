@@ -1,0 +1,42 @@
+<script type="text/javascript" src="js/varofat/adjustment.js"></script>
+<div id="VAROFAT-ADJUST" style="height:144px;">
+	<p>
+		<label>
+			<strong> SETTLE DATE : </strong>
+		</label>
+		<input type="text" id="SETTLEDATE" name="DATE" class="tb_from" style="width:100px; text-align:right"/>
+		,&nbsp;&nbsp;
+		<label for="OPTION">
+			<strong>OPTION : </strong>
+		</label>
+		<select id="OPTION" name="OPTION">
+			<option value="">select</option>
+			<option value="11">ALL</option>
+			<option value="00">CREDIT</option>
+			<option value="01">DEBIT</option>
+			<option value="02">REVERSAL</option>
+			<option value="03">CHARGEBACK</option>
+			<option value="04">REPRESENT</option>
+			<option value="05">OTHER</option>
+		</select>
+	</p>
+	<p>
+		<label for="REFNO">
+			<strong>RETR.NO : </strong>
+		</label>
+		<input type="text" id="REFNO" name="REFERENCE" value="%" class="tb_from" style="width:100px;"/>
+		,&nbsp;&nbsp;
+		<label for="CARDNO">
+			<strong>CARD : </strong>
+		</label>
+		<input type="text" id="CARDNO" name="CARDNUMBER" value="%" class="tb_from" style="width:100px;"/>
+		<button id="SEARCH">Search</button>
+		<button id="UPDATE">Update</button>
+	</p>
+</div>
+<div id="VARET" >
+	<table id="VATABLE"></table>
+	<div id="VAPAGER"></div>
+</div>
+
+

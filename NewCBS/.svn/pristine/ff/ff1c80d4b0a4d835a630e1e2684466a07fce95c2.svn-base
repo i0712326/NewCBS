@@ -1,0 +1,25 @@
+<script type="text/javascript" src="js/marofat/reconcile.js"></script>
+<div id="MAROFAT-RECON" style="height:80px;">
+	<p>
+		<label for="RDATE">
+			<strong>DATE : </strong>
+		</label>
+		<input type="text" class="tb_from" id="RDATE" style="width:90px;"/>
+		<button id="PROCESS">Process</button>
+		<button id="CONFIRM">Confirm</button>
+	</p>
+</div>
+<div id="MRRET">
+	<ul>
+		<li><a href="#tab-credit">CREDIT</a></li>
+		<li><a href="#tab-debit">DEBIT</a></li>
+	</ul>
+	<div id="tab-credit">
+		<table id="MRCRTABLE"></table>
+		<div id="MRCRPAGER"></div>
+	</div>
+	<div id="tab-debit">
+		<table id="MRDBTABLE"></table>
+		<div id="MRDBPAGER"></div>
+	</div>
+</div>

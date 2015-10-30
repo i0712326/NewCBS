@@ -1,0 +1,63 @@
+<script type="text/javascript" src="js/marofat/import.js"></script>
+<div id="MAROFAT-IMPORT-FORM">
+	<p>
+		<label for="MIMREC">
+			<strong>RECORD : </strong>
+		</label>
+		<input type="text" id="MIMREC" name="RECORD" value="0" class="tb_from" style="width:60px;text-align:right;"/>
+		,&nbsp;&nbsp;
+		<label for="MIMDATE">
+			<strong>DATE :</strong>
+		</label>
+		<input type="text" id="MIMDATE" name="DATE" value="" class="tb_from" style="width:90px;text-align:right;"/>
+		<button id="MIMSUBMIT">Submit</button>
+		<button id="MIMCONFIRM">Confirm</button>
+	</p>
+	<p>
+		<label for="MIMOPTION"> 
+			<strong>
+				OPTION : 
+			</strong>
+		</label>
+		<select id="MIMOPTION" name="OPTION">
+			<option value="">select</option>
+			<option value="state">STATE</option>
+			<option value="settle">SETTLE</option>
+		</select>
+		<input type="file" id="MIMFILE" name="FILE"/>
+	</p>
+</div>
+<div id="MIRET">
+	<ul>
+		<li><a href="#tab-credit">CREDIT</a></li>
+		<li><a href="#tab-debit">DEBIT</a></li>
+		<li><a href="#tab-reversal">REVERSAL</a></li>
+		<li><a href="#tab-adjustment">ADJUSTMENT</a></li>
+		<li><a href="#tab-chargeback">CHARGEBACK</a></li>
+		<li><a href="#tab-represent">REPRESENT</a></li>
+	</ul>
+	<div id="tab-credit">
+		<table id="MICRTABLE"></table>
+		<div id="MICRPAGER"></div>
+	</div>
+	<div id="tab-debit">
+		<table id="MIDBTABLE"></table>
+		<div id="MIDBPAGER"></div>
+	</div>
+	<div id="tab-reversal">
+		<table id="MIRVTABLE"></table>
+		<div id="MIRVPAGER"></div>
+	</div>
+	<div id="tab-adjustment">
+		<table id="MIADTABLE"></table>
+		<div id="MIADPAGER"></div>
+	</div>
+	<div id="tab-chargeback">
+		<table id="MICBTABLE"></table>
+		<div id="MICBPAGER"></div>
+	</div>
+	<div id="tab-represent">
+		<table id="MIRPTABLE"></table>
+		<div id="MIRPPAGER"></div>
+	</div>
+</div>

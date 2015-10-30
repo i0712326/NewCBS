@@ -1,0 +1,58 @@
+package bcel.cardcenter.cbs.carofat.utility;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPClientConfig;
+import org.apache.commons.net.ftp.FTPReply;
+
+public class FTPClientTest {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		 FileOutputStream ostream = null;
+		 FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
+		 FTPClient client = new FTPClient();
+		 client.configure(conf);
+		 try{
+			 client.connect("172.16.3.157");
+			 int reply = client.getReplyCode();
+			 if (!FTPReply.isPositiveCompletion(reply)) {
+				 System.err.println("connect fail");
+				 System.exit(1);
+			 }
+			 if (client.login("admin", "bcel123?") == false) {
+				 System.err.println("login failed");
+				 System.exit(2);
+			 }
+			 client.setFileType(FTP.BINARY_FILE_TYPE);
+			 client.enterLocalPassiveMode();
+			 ostream = new FileOutputStream("C:\\Users\\phoud\\Documents\\Report\\test77777");
+			 client.retrieveFile("/opt/cuptmp/IFD13042701ICOM", ostream);
+			
+		 }
+		 catch(Exception e){
+			 e.printStackTrace();
+		 }
+		 finally{
+			 if (client.isConnected())
+				try {
+					client.disconnect();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			 if (ostream != null) {
+			      try {
+			          ostream.close();
+			      } catch(Exception e) {
+			          e.printStackTrace();
+			      }
+			 }
+		 }
+	}
+
+}

@@ -1,0 +1,5 @@
+package bcel.cardcenter.cbs.carofat.utility;
+
+public interface FTPFileCopy {
+
+}

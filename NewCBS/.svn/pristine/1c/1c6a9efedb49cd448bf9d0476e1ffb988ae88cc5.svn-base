@@ -1,0 +1,68 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.jdbc.Work;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class GetStateCallback implements HibernateCallback {
+
+	@Override
+	public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+		GetStateWork getStateWork = new GetStateWork();
+		session.doWork(getStateWork);
+		return getStateWork.getCups();
+	}
+	
+	private class GetStateWork implements Work{
+		private List<CupTxn> cups;
+		public List<CupTxn> getCups() {
+			return cups;
+		}
+		public void setCups(List<CupTxn> cups) {
+			this.cups = cups;
+		}
+		@Override
+		public void execute(Connection conn) throws SQLException {
+			String sql = "SELECT * FROM TEMP_STATE";
+			PreparedStatement stmt = conn.prepareCall(sql);
+			ResultSet rs = stmt.executeQuery();
+			List<CupTxn> cups = new ArrayList<CupTxn>();
+			while(rs.next()){
+				Date date 	= rs.getDate("TXNDATE");
+				String card = rs.getString("CARD");
+				String trace = rs.getString("TRACE");
+				double amount = rs.getDouble("AMOUNT");
+				double fee	  = rs.getDouble("FEE");
+				double net	  = rs.getDouble("NET");
+				String txnType	  = rs.getString("TXNTYPE");
+				String status	= rs.getString("STATUS");
+				
+				CupTxn cup = new CupTxn();
+				cup.setDate(date);
+				cup.setCard(card);
+				cup.setTrace(trace);
+				cup.setAmount(amount);
+				cup.setFee(fee);
+				cup.setNet(net);
+				cup.setTxnType(txnType);
+				cup.setStatus(status);
+				cups.add(cup);
+			}
+			setCups(cups);
+		}
+		
+	}
+
+}

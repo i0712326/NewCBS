@@ -1,0 +1,39 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import oracle.jdbc.OracleTypes;
+
+import org.hibernate.jdbc.Work;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class UpdateCupTxnWork implements Work {
+	private CupTxn cup;
+	private String option;
+	
+	public UpdateCupTxnWork(CupTxn cup, String option){
+		this.cup = cup;
+		this.option = option;
+	}
+	@Override
+	public void execute(Connection conn) throws SQLException {
+		String sql = "{ ? = call CBSPACKAGE.UPDATECUPTXN( ? ,?, ?, ?, ?, ?, ?, ?, ? ) }";
+		CallableStatement call = conn.prepareCall(sql);
+		call.registerOutParameter(1, OracleTypes.INTEGER);
+		call.setDate(2, cup.getDate());
+		call.setString(3, cup.getCard());
+		call.setString(4, cup.getTrace());
+		call.setDouble(5, cup.getAmount());
+		call.setDouble(6, cup.getFee());
+		call.setDouble(7, cup.getNet());
+		call.setString(8, cup.getApprCode());
+		call.setString(9, cup.getTxnType());
+		call.setString(10, option);
+		boolean ret = call.execute();
+		System.out.println(ret);
+	}
+
+}

@@ -1,0 +1,24 @@
+package bcel.cardcenter.cbs.carofat.utility;
+
+import java.io.File;
+import java.sql.Date;
+import java.util.List;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public interface CupTxnUtil {
+	void saveAll(List<CupTxn> cupTxns);
+	void insertAll(List<CupTxn> cupTxns);
+	public CupTxnFileReader getCupTxnFileReader(String option,File file, Date date);
+	public List<CupTxn> reconcileState();
+	public List<CupTxn> reconcileSettle();
+	public int updateCupTxnStatus();
+	public List<CupTxn> getSettle();
+	public List<CupTxn> getState();
+	public boolean validatDate(Date date);
+	public boolean validatUploadDateType(java.sql.Date txnDate, String option);
+	public List<CupTxn> getCupTxnByTraceOption(String trace, String option);
+	public List<CupTxn> getTxnByDateOption(java.sql.Date sqlDate, String option);
+	public void update(CupTxn cup, String option);
+	public void delete(CupTxn cup, String option);
+}

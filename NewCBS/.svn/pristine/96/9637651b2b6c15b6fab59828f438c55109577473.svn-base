@@ -1,0 +1,100 @@
+@CHARSET "UTF-8";
+body{
+		font: 62.5% "Trebuchet MS", sans-serif;
+		margin: 5px;
+	}
+	
+#menu {
+	margin: 3px 3px 3px 3px;
+	height: 35px;
+	border: 1px solid #CCCCCC;
+	background-color: #FFFFFF;
+}
+
+.element_position {
+	text-align: right;
+	padding-top: 7px;
+}
+
+.element_att {
+	float: right;
+	margin: 2px 6px 0 3px;
+}
+
+#menu_part {
+	margin: 3px;
+	height: 600px;
+	width: 200px;
+	border: 1px solid #FFFFFF;
+	background-color: #FFFFFF;
+	float: left;
+	text-align:left;
+}
+
+a:link {
+	text-decoration: none
+}
+
+a:visited {
+	text-decoration: none
+}
+
+a:active {
+	text-decoration: none
+}
+
+#tabs .tabs-spacer {
+	float: left;
+	height: 200px;
+}
+
+.tabs-bottom .ui-tabs-nav {
+	clear: left;
+	padding: 0 .2em .2em .2em;
+}
+
+.tabs-bottom .ui-tabs-nav li {
+	top: auto;
+	bottom: 0;
+	margin: 0 .2em 1px 0;
+	border-bottom: auto;
+	border-top: 0;
+}
+
+.tabs-bottom .ui-tabs-nav li.ui-tabs-active {
+	margin-top: -1px;
+	padding-top: 1px;
+}
+
+.label_content {
+	font-style : italic;
+	font-weight : bold;
+	text-decoration : underline;
+}
+
+/* form style */
+
+.form_style {
+	text-decoration: underline;
+	font-style: italic;
+}
+
+.money_format {
+	text-align: right;
+}
+
+.tb_from {
+	background-image: url(/css/img/form_bg.jpg);
+	background-repeat: repeat-x;
+	border: 1px solid #d1c7ac;
+	width: 85px;
+	color: #333333;
+	padding: 3px;
+	margin-right: 4px;
+	margin-bottom: 8px;
+	font-family: tahoma, arial, sans-serif;
+}
+
+.tb_font {
+	font-style: italic;
+}

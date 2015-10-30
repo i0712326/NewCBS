@@ -1,0 +1,28 @@
+$(function(){
+	var $carofatHis = $('#CAROFAT-HISTORY');
+	var $date		= $carofatHis.find('#CHDATE');
+	var $option		= $carofatHis.find('#CHOPTION');
+	var $card		= $carofatHis.find('#CHCARD');
+	var $trace		= $carofatHis.find('#CHTRACE');
+	var $search		= $carofatHis.find('#CHSEARCH');
+	var $chret		= $('#CHRET');
+	var $chTable 	= $chret.find('#CHTABLE');
+	var $chPager	= $chret.find('#CHPAGER');
+	
+	$date.datepicker({
+		showOn:'button',
+		 buttonImage: 'css/img/calendar.gif',
+		 buttonImageOnly: true
+	});
+	$search.button();
+	$chTable.jqGrid(carofatTableParam($chPager,'HISTORY'));
+	
+	// action
+	$search.click(function(){
+		var allFields = [$date,$option,$card,$trace];
+		var check	  = dataValidation(allFields);
+		if(check==true){
+			startProcessing();
+		}
+	});
+});

@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cupTxnReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="5"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SETTLEDATE" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="address" class="java.lang.String">
+		<fieldDescription><![CDATA[address]]></fieldDescription>
+	</field>
+	<field name="amount" class="java.lang.Double">
+		<fieldDescription><![CDATA[amount]]></fieldDescription>
+	</field>
+	<field name="apprCode" class="java.lang.String">
+		<fieldDescription><![CDATA[apprCode]]></fieldDescription>
+	</field>
+	<field name="card" class="java.lang.String">
+		<fieldDescription><![CDATA[card]]></fieldDescription>
+	</field>
+	<field name="country" class="java.lang.String">
+		<fieldDescription><![CDATA[country]]></fieldDescription>
+	</field>
+	<field name="date" class="java.sql.Date">
+		<fieldDescription><![CDATA[date]]></fieldDescription>
+	</field>
+	<field name="fee" class="java.lang.Double">
+		<fieldDescription><![CDATA[fee]]></fieldDescription>
+	</field>
+	<field name="merchant" class="java.lang.String">
+		<fieldDescription><![CDATA[merchant]]></fieldDescription>
+	</field>
+	<field name="net" class="java.lang.Double">
+		<fieldDescription><![CDATA[net]]></fieldDescription>
+	</field>
+	<field name="terminalId" class="java.lang.String">
+		<fieldDescription><![CDATA[terminalId]]></fieldDescription>
+	</field>
+	<field name="trace" class="java.lang.String">
+		<fieldDescription><![CDATA[trace]]></fieldDescription>
+	</field>
+	<variable name="trace_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{trace}]]></variableExpression>
+	</variable>
+	<variable name="amount_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<variable name="fee_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{fee}]]></variableExpression>
+	</variable>
+	<variable name="net_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{net}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="0" width="136" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BCEL CARDCENTER]]></text>
+			</staticText>
+			<textField pattern="MMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="431" y="0" width="124" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SETTLEDATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="171" y="25" width="213" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="16" isBold="true" isUnderline="true"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[CUP SETTLEMENT REPORT]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="16" y="1" width="61" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="77" y="1" width="67" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CARDNUMBER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="143" y="1" width="50" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[TRACE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="193" y="1" width="32" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="224" y="1" width="46" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[AMT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="269" y="1" width="42" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FEE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="355" y="1" width="46" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[TERM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="400" y="1" width="60" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[MERCH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="460" y="1" width="54" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ADDR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="311" y="1" width="45" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NET]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="514" y="1" width="41" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[COUNT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="16" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="MMM dd, yyyy">
+				<reportElement x="16" y="-1" width="61" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="76" y="-1" width="69" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{card}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="-1" width="51" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{trace}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="193" y="-1" width="32" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apprCode}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="224" y="-1" width="47" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="269" y="-1" width="42" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="60" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{merchant}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="54" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="514" y="-1" width="41" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{country}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="0" width="47" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{terminalId}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="311" y="0" width="44" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{net}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="16" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="19" width="552" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField pattern="MMM dd, yyyy">
+				<reportElement x="1" y="0" width="95" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="524" y="0" width="18" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="541" y="0" width="13" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans Mono" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="58" splitType="Stretch">
+			<staticText>
+				<reportElement x="153" y="16" width="45" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Sans Mono" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="16" width="49" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Record # :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="283" y="16" width="25" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="16" width="22" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Net]]></text>
+			</staticText>
+			<textField pattern="#,##0;(#,##0)">
+				<reportElement x="76" y="16" width="62" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{trace_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="197" y="16" width="57" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{amount_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="307" y="16" width="58" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{fee_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="408" y="16" width="76" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{net_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

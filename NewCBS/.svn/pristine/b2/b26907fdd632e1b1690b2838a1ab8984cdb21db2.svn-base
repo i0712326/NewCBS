@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="css/windows8/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+<link href="css/windows8/main.window.style.css" rel="stylesheet">
+<link href="css/tree_list/jquery.treeview.css" rel="stylesheet">
+<link href="css/jqgrid/css/ui.jqgrid.css" rel="stylesheet">
+<!-- java script -->
+<script src="js/lib/jquery-1.9.1.js"></script>
+<script src="js/lib/jquery-ui-1.10.3.custom.js"></script>
+<script src="js/windows8/main.windows.control.js"></script>
+<script type="text/javascript" src="js/tree_list/jquery.treeview.js"></script>
+<script type="text/javascript" src="js/tree_list/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/jqgrid/js/jquery.jqGrid.src.js"></script>
+<script type="text/javascript" src="js/jqgrid/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="js/fileUpload/jquery.upload-1.0.2.js"></script>
+<script type="text/javascript" src="js/validate/validation.js"></script>
+<title>NEW CBS</title>
+</head>
+<body>
+	<!-- HEADER -->
+	<div id="header">
+		<input type="text" id="FUNCNAME" class="textbox" style="text-align:right;"/>
+		<ul id="icons" class="ui-widget ui-helper-clearfix">
+			<li class="ui-state-default ui-corner-all" title="GO"><span class="ui-icon ui-icon-carat-1-e" id="GOBUTT"></span></li>
+			<li class="ui-state-default ui-corner-all" title="PROFILE"><span class="ui-icon ui-icon-carat-1-s" id="PROFILE"></span></li>
+		</ul>
+	</div>
+	<!-- NAVIGATION MENU -->
+	<div id="nav">
+		<h3>MENU</h3>
+		<div id="MENU"></div>
+		<h3>ADMINSTRATION</h3>
+		<div id="ADMIN"></div>
+		<h3>SETTING</h3>
+		<div id="SETTING"></div>
+	</div>
+	<!-- MAIN DIALOG CONTENT -->
+	<div id="main">
+		<div id="AAROFAT">
+			<div id="CONTENT"></div>
+		</div>
+		<div id="CAROFAT">
+			<div id="CONTENT"></div>
+		</div>
+		<div id="VAROFAT">
+			<div id="CONTENT"></div>
+		</div>
+		<div id="MAROFAT">
+			<div id="CONTENT"></div>
+		</div>
+	</div>
+	<!-- ADDITIONAL DIALOG -->
+	<div id="ERROR">
+		<div id="CONTENT"></div>
+	</div>
+	<div id="ALERT">
+		<div id="CONTENT"></div>
+	</div>
+	<div id="PROCESSING">
+		<div id="CONTENT"></div>
+	</div>
+</body>
+</html>

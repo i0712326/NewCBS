@@ -1,0 +1,26 @@
+package bcel.cardcenter.cbs.unit.test;
+
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.util.List;
+
+import org.junit.Test;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+import bcel.cardcenter.cbs.carofat.utility.CupTxnStatementReader;
+
+public class CupTxnStatementReaderTest {
+	@Test
+	public void test() {
+		File file= new File("C:\\Users\\phoud\\Desktop\\cup inter date 01.08.12\\01.02.13.xlsx");
+		CupTxnStatementReader state = new CupTxnStatementReader(file);
+		List<CupTxn> cupTxns = state.read();
+		for(CupTxn cup : cupTxns){
+			System.out.println(cup);
+		}
+		System.out.println(cupTxns.size());
+		assertTrue(cupTxns.size()>0);
+	}
+
+}

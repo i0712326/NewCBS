@@ -1,0 +1,23 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.SQLException;
+
+import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class GetSettleCallback implements HibernateCallback {
+
+	@Override
+	public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+		String sql = "SELECT * FROM TEMP_SETTLE";
+		SQLQuery sqlQuery = session.createSQLQuery(sql);
+		sqlQuery.addEntity(CupTxn.class);
+		return sqlQuery.list();
+	}
+
+}

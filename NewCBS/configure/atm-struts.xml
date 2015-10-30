@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="cbs_atm_package" namespace="/aarofat/reconcile" extends="cbs_package">
+		<!-- Persist Result -->
+		<action name="persistData" class="persistDataAction" method="execute">
+			<result name="success" type="dispatcher">
+				aarofatLastXml.jsp
+			</result>
+		</action>
+		<!-- Reconcile action definition -->
+		<action name="reconcileFile" class="reconcileFileAction" method="execute">
+			<result name="success" type="dispatcher">
+				aarofatRetXml.jsp
+			</result>
+		</action>
+		<!-- ATM ID list table -->
+		<action name="getAtmById" class="getAtmIdAction" method="execute">
+			<result name="success" type="dispatcher">
+				atmListXml.jsp
+			</result>
+		</action>
+	</package>
+</struts>

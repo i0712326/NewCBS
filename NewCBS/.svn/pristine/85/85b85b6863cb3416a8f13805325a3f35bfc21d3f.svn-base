@@ -1,0 +1,27 @@
+package bcel.cardcenter.cbs.carofat.utility;
+
+import static org.junit.Assert.*;
+
+import java.util.List;
+
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class FTPFileCopyImpTest {
+	
+	@Test
+	public void test() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		FTPFileCopy fileCopy = (FTPFileCopy) context.getBean("ftpFileCopy");
+		try {
+			List<String> files = fileCopy.access();
+			for(String name : files){
+				fileCopy.readFile(name);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

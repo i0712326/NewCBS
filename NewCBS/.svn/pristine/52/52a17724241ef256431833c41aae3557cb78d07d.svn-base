@@ -1,0 +1,28 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.Date;
+import java.util.List;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxnSettle;
+
+public interface CupTxnSettleDao {
+	public void saveOrUpdateAll(List<CupTxnSettle> cupTxns);
+	public List<CupTxnSettle> getCupTxnSettles(Date date, String card, String trace);
+	public boolean confirmCupTxnSettleBatch();
+	public List<CupTxnSettle> getTxnSettles(Date date, int first, int max);
+	public int getRows();
+	/*
+	public void insertOrUpdateAll(List<CupTxnSettle> cupTxns);
+	public List<CupTxnSettle> reconcileState();
+	public List<CupTxnSettle> reconcileSettle();
+	public void update(CupTxnSettle cup, String option);
+	public List<CupTxnSettle> getSettle();
+	public List<CupTxnSettle> getState();
+	public boolean validateDate(Date date);
+	public boolean validateUploadDateType(Date txnDate, String option);
+	public List<CupTxnSettle> searchTxnByTraceOption(String trace, String option);
+	public List<CupTxnSettle> searchTxnbyDateOption(Date sqlDate, String option);
+	public void delete(CupTxnSettle cup, String option);
+	public int updatCupTxnStatus();
+	*/
+}

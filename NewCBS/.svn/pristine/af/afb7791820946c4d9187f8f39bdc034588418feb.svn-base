@@ -1,0 +1,32 @@
+<script type="text/javascript">
+$(function(){
+	var $main = $('#VAROFAT-ADDSEARCH');
+	var $retr = $main.find('#RETR');
+	var $card = $main.find('#card');
+	var $search = $main.find('#SEARCH');
+	var $ret = $('#VADDSEARCH');
+	var $reTable = $ret.find('#VADDTABLE');
+	var $pager   = $ret.find('#VADDPAGER');
+	
+	$search.button();
+	$reTable.jqGrid();
+});
+</script>
+<div id="VAROFAT-ADDSEARCH">
+	<p>
+		<label for="RETR">
+			<strong> RETR : </strong>
+		</label>
+		<input type="text" id="RETR" value="%" class="tb_from" style="width:90px;text-align:right;"/>
+		,&nbsp;&nbsp;
+		<label for="CARD">
+			<strong> CARD : </strong>
+		</label>
+		<input type="text" id="CARD" value="%" class="tb_from" style="width:90px;text-align:right;"/>
+		<button id="SEARCH">search</button>
+	</p>
+</div>
+<div id="VADDSEARCH">
+	<table id="VADDTABLE"></table>
+	<div id="VADDPAGER"></div>
+</div>

@@ -1,0 +1,22 @@
+<link href="css/varofat/varofat.css" rel="stylesheet"/>
+<script type="text/javascript" src="js/varofat/varofat.js"></script>
+<div id="VAROFAT-FORM-CONT" class="tabs-bottom">
+	<ul>
+		<li><a href="#varofat-import">IMPORT</a></li>
+		<li><a href="#varofat-reconcile">RECONCILE</a></li>
+		<li><a href="#varofat-adjustment">ADJUSTMENT</a></li>
+		<li><a href="#varofat-history">HISTORY</a></li>
+	</ul>
+	<div id="varofat-import">
+		<div id="content"></div>
+	</div>
+	<div id="varofat-reconcile">
+		<div id="content"></div>
+	</div>
+	<div id="varofat-adjustment">
+		<div id="content"></div>
+	</div>
+	<div id="varofat-history">
+		<div id="content"></div>
+	</div>
+</div>

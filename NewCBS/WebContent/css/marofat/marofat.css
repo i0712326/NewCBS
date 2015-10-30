@@ -1,0 +1,37 @@
+@CHARSET "UTF-8";
+
+#marofat-import{
+	height: 480px;
+}
+#marofat-reconcile{
+	height: 480px;
+}
+#marofat-adjustment{
+	height: 480px;
+}
+#marofat-history{
+	height: 480px;
+}
+
+#MAROFAT-FORM-CONT .tabs-spacer {
+	float: left;
+	height: 500px;
+}
+
+.tabs-bottom .ui-tabs-nav {
+	clear: left;
+	padding: 0 .2em .2em .2em;
+}
+
+.tabs-bottom .ui-tabs-nav li {
+	top: auto;
+	bottom: 0;
+	margin: 0 .2em 1px 0;
+	border-bottom: auto;
+	border-top: 0;
+}
+
+.tabs-bottom .ui-tabs-nav li.ui-tabs-active {
+	margin-top: -1px;
+	padding-top: 1px;
+}

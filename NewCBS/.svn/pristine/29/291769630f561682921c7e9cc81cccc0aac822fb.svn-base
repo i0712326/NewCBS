@@ -1,0 +1,27 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.Date;
+import java.sql.SQLException;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
+public class TxnByDateOptionCallback implements HibernateCallback {
+	private Date date;
+	private String option;
+	
+	public TxnByDateOptionCallback(Date date, String option) {
+		this.date = date;
+		this.option = option;
+	}
+
+	@Override
+	public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+		TxnByDateOptionWork work = new TxnByDateOptionWork(date,option);
+		session.doWork(work);
+		return work.getCupTxns();
+	}
+
+}

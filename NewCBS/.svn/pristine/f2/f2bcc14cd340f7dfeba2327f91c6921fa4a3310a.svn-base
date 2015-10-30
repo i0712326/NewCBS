@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+	<header>
+		<result>
+			error
+		</result>
+		<message>
+			ERROR CODE - 0001
+		</message>
+		<extend>
+			<page>0</page>
+			<total>0</total>
+			<records>0</records>
+		</extend>
+	</header>
+	<entities>
+		<entity>
+		</entity>
+	</entities>
+</data>

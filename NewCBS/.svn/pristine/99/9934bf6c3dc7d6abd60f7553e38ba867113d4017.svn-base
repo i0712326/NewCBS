@@ -1,0 +1,184 @@
+package bcel.cardcenter.cbs.carofat.utility;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.log4j.Logger;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class CupTxnStatementReader implements CupTxnFileReader {
+	private static Logger logger = Logger.getLogger(CupTxnStatementReader.class);
+	private final static String CARDNUMBER = "^[0-9]{16}$";
+	private final static String TRACE 	  = "^[0-9]{6}$";
+	private final static String INQFEE	  = "Charge CUP BALANCE INQUIRY OVERSEA";
+	private final static String CWD		  = "CUP CASH OVERSEA";
+	private final static String CWDFEE	  = "Charge CUP CASH OVERSEA";
+	private final static String POS		  = "CUP POS OVERSEA";
+	private final static String CWDREV	  = "Reverse CUP CASH OVERSEA";
+	private final static String CWDFEEREV = "Reverse Charge CUP CASH OVERSEA";
+	
+	private Pattern cardNumberPattern;
+	private Pattern tracePattern;
+	private Pattern inqFeePattern;
+	private Pattern cwdPattern;
+	private Pattern cwdFeePattern;
+	private Pattern posPattern;
+	private Pattern cwdRevPattern;
+	private Pattern cwdFeeRevPattern;
+	private Matcher matcher;
+	private File file;
+	
+	public CupTxnStatementReader(File file){
+		cardNumberPattern = Pattern.compile(CARDNUMBER);
+		tracePattern	  = Pattern.compile(TRACE);
+		inqFeePattern	  = Pattern.compile(INQFEE);
+		cwdPattern		  = Pattern.compile(CWD);
+		cwdFeePattern	  = Pattern.compile(CWDFEE);
+		posPattern		  = Pattern.compile(POS);
+		cwdRevPattern	  = Pattern.compile(CWDREV);
+		cwdFeeRevPattern  = Pattern.compile(CWDFEEREV);
+		this.file = file;
+	}
+	
+	public List<CupTxn> read(){ 
+		List<CupTxn> cupTxns = new ArrayList<CupTxn>();
+		try {
+			InputStream in = new FileInputStream(file);
+			XSSFWorkbook wb = (XSSFWorkbook) WorkbookFactory.create(in);
+			XSSFSheet sheet = wb.getSheetAt(0);
+			
+			int lenght = sheet.getLastRowNum();
+			
+			for(int i=16;i<lenght-5;i++){
+			
+				XSSFRow row = sheet.getRow(i);
+				
+				// read date of transaction
+				Date date 		  = new Date(row.getCell(1).getDateCellValue().getTime());
+				
+				String cardNumber = null;
+				String trace      = null;
+				String txnType    = null;
+				// read description
+				String bin		  =  row.getCell(3).getStringCellValue();
+				String description = row.getCell(5).getStringCellValue();
+				String[] tokens = description.split("\\|");
+				for(int j=0;j<tokens.length;j++){
+					String token = tokens[j].trim();
+					matcher = inqFeePattern.matcher(token);
+					if(matcher.find())
+						txnType = "INQ";
+					matcher = cwdPattern.matcher(token);
+					if(matcher.find())
+						txnType = "CWD";
+					matcher = cwdFeePattern.matcher(token);
+					if(matcher.find())
+						txnType = "CWDFEE";
+					matcher = posPattern.matcher(token);
+					if(matcher.find())
+						txnType = "POS";
+					matcher = cwdRevPattern.matcher(token);
+					if(matcher.find())
+						txnType = "CWDREV";
+					matcher = cwdFeeRevPattern.matcher(token);
+					if(matcher.find())
+						txnType = "CWDFRV";
+					matcher = cardNumberPattern.matcher(token);
+					if(matcher.find()){
+						cardNumber = token;
+					}
+					matcher = tracePattern.matcher(token);
+					if(matcher.find()){
+						trace = token;
+					}
+					
+						
+				}
+				
+				double amount = row.getCell(10).getNumericCellValue();
+				CupTxn cupTxn = new CupTxn();
+				cupTxn.setDate(date);
+				cupTxn.setCard(cardNumber);
+				cupTxn.setTrace(trace);
+				cupTxn.setTxnType(txnType);
+				String type = cupTxn.getTxnType();
+				if(type!=null){
+					if(type.equals("CWDREV") || type.equals("CWDFRV")){
+						amount = row.getCell(8).getNumericCellValue();
+						amount = -1*amount;
+					}
+				}
+				cupTxn.setAmount(amount);
+				cupTxn.setBin(bin);
+				
+				cupTxns.add(cupTxn);
+			}
+		
+		} catch (FileNotFoundException e) {
+			logger.debug("Not Found File Exeception", e);
+			return null;
+		} catch (IOException e) {
+			logger.debug("IOException happen", e);
+			return null;
+		} catch (InvalidFormatException e) {
+			logger.debug("InvalidFormat Exception Happend", e);
+			return null;
+		}
+		for(CupTxn cup : cupTxns)
+			System.err.println(cup);
+		return filterTxns(cupTxns);
+	}
+	
+	private List<CupTxn> filterTxns(List<CupTxn> cupTxns){
+		List<CupTxn> after = new ArrayList<CupTxn>();
+		for(int i=0;i<cupTxns.size();i++){
+			CupTxn item = cupTxns.get(i);
+			String bin = item.getBin();
+			for(int j=i+1;j<cupTxns.size();j++){
+				CupTxn temp = cupTxns.get(j);
+				String tempBin = temp.getBin();
+				if(bin.equals(tempBin)){
+					String txnType = temp.getTxnType();
+					if(txnType != null){
+						if(txnType.equals("CWDFEE")){
+							double fee = temp.getAmount();
+							if(item.getTxnType().equals("CWD")){
+								item.setFee(fee);
+								cupTxns.remove(j);
+							}
+						}
+				
+						if(txnType.equals("CWDFRV")){
+							double fee = temp.getAmount();
+							if(item.getTxnType().equals("CWDREV")){
+								item.setFee(fee);
+								cupTxns.remove(j);
+							}
+						}
+					}
+				}
+			}
+			if(item.getCard()!=null && item.getTrace()!= null){
+				double net = item.getAmount()+item.getFee();
+				item.setNet(net);
+				after.add(item);
+			}
+		}
+		
+		return after;
+	}
+}

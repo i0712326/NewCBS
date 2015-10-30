@@ -1,0 +1,63 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Date;
+
+import oracle.jdbc.OracleTypes;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.jdbc.Work;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
+public class ValidateDateTypeCallback implements HibernateCallback {
+	private Date txnDate;
+	private String option;
+	public ValidateDateTypeCallback(Date txnDate, String option) {
+		this.txnDate = txnDate;
+		this.option = option;
+	}
+
+	@Override
+	public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+		ValidateDateTypeWork work = new ValidateDateTypeWork(txnDate,option);
+		session.doWork(work);
+		return work.isRet();
+	}
+	
+	private class ValidateDateTypeWork implements Work{
+		private boolean ret;
+		private Date txnDate;
+		private String option;
+		public ValidateDateTypeWork(Date txnDate, String option) {
+			this.txnDate = txnDate;
+			this.option = option;
+		}
+
+		@Override
+		public void execute(Connection conn) throws SQLException {
+			String sql = "{? = call CBSPACKAGE.VALIDATEDATETYPE(?, ?)}";
+			CallableStatement call = conn.prepareCall(sql);
+			call.registerOutParameter(1, OracleTypes.INTEGER);
+			call.setDate(2, txnDate);
+			call.setString(3, option);
+			call.execute();
+			int ret = (int) call.getObject(1);
+			if(ret>0)
+				setRet(true);
+			else
+				setRet(false);
+		}
+
+		public boolean isRet() {
+			return ret;
+		}
+		public void setRet(boolean ret) {
+			this.ret = ret;
+		}
+		
+	}
+}

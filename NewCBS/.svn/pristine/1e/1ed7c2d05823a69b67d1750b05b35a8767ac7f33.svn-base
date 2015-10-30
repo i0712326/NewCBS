@@ -1,0 +1,319 @@
+<?xml version='1.0'  encoding='UTF-8' ?>
+<RESULTS>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0011]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[NOT EXIST IN EJOURNAL]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3001]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Invalid transaction key]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3002]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Invalid PIN , PIN entry ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3003]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Invalid PIN, retry = 0 (in PIN Change) ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3004]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Invalid PIN for credit card (in PIN verification)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3005]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Expire card (in PIN verification)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3006]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Hot card, a/c closed ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3013]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Hot card, card lost ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3016]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Hot card, irregular ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3128]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Other reason reject]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3400]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[System error]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3401]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Insufficient fund for cash withdrawal]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3402]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Invalid card]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3403]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Insufficient fund for funds transfer]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3424]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Host down]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3425]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Branch number mismatch]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3504]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Exceeds withdrawal limit]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3506]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Usage number exceeds cycle count]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3867]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Host under maintenance]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3007]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Card is invalid or PIN is incorrect]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3008]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Your card has been disable]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3009]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[You has reached maximum amount per time (for CWD)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3010]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Invalid Account]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3011]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Invalid Source Account]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3012]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Invalid Destination Account]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[3014]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Service is not available for this moment (for MST,RQS) ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2002]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX card read error (OOS)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2009]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX card acceptor failed (OOS)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2010]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX card reader inoperative  (OOS)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2011]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX customer does not take money]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2012]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX customer does not take card]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2017]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX encryption error]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2018]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX cash presenter tampered ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2019]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX cash stacker unsuccessful ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2022]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX receipt printer inoperative ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2023]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX journal printer inoperative (OOS)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2033]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX card reader jam  (OOS)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2034]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX card reader tampered (OOS) ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2035]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX cash handler failed ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2038]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX close by supervisor (OOS)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2039]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX open by supervisor]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2040]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX open after communication failure]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2041]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX open after receive new key]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2042]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX open after send device status]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2046]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX cash presenter fail/ customer doesn’t take all/some money ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2047]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX advice paper out]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2048]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX journal paper out (OOS)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2049]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX advice paper low]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2050]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX journal paper low]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2051]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX one/more h/w resources unavailable]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2054]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX encryptor inoperative]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2097]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX close because no response from switch (OOS)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2098]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX close because key failure]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2099]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX waiting for switch response (OOS)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2100]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX in idle loop]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2101]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX Customer input time out]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2102]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX Customer press Cancel]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[5000]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX close  for response from switch (for PIN msg)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[5001]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX close null for response from switch (for CWD msg)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[5002]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX close null for response from switch (for CWC msg) ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[5003]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX close null for response from switch (for TFR msg) ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[5004]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX close null for response from switch (for TFC msg) ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[4001]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Cash is not stacked successfully (CWC)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[4002]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Customer does not take card (CWC)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[4003]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Cash withdrawal response mismatch (CWC)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[4004]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[Funds transfer response mismatch (TFC)]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0001]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[CASH STACKER FAILED]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0002]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[NO RESPONSE FROM SWITCH]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0003]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OUT OF SERVICE]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0004]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[DISPENSER FAILURE]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0005]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[CARD READER FAILURE]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0006]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[CARD TRACK READER ERROR]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0007]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[COMMUNICATION FAILURE]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0008]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[RESTART]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0000]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[NORMAL]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0009]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[CUSTOMER MAY TAKES SOME OF BILLS]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[0010]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[CASH NOT ACCESSED HAD PURGED]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2036]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX notes mixer fault ]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="CODE"><![CDATA[2037]]></COLUMN>
+		<COLUMN NAME="DESCRIPTION"><![CDATA[OEX restart after power failure]]></COLUMN>
+	</ROW>
+</RESULTS>

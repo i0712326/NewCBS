@@ -1,0 +1,35 @@
+<script type="text/javascript" src="js/cupedc/history.js"></script>
+<div id="CUPEDC-HISTORY">
+	<p>
+		<label for="CDCDATE">
+			<strong> DATE : </strong>
+		</label>
+		<input type="text" id="CDCDATE" name="DATE" size="12"/>
+		<button id="CDCSEARCH">search</button>
+	</p>
+	<p>
+		<label for="CDCCARD">
+			<strong>CARD : </strong>
+		</label>
+		<input type="text" id="CDCCARD" name="CARD" value="%" size="12"/>
+		,&nbsp;&nbsp;
+		<label for="CDCTRACE">
+			<strong>TRACE : </strong>
+		</label>
+		<input type="text" id="CDCTRACE" name="TRACE" value="%" size="12"/>
+	</p>
+</div>
+<div id="CDCTAB">
+	<ul>
+		<li><a href="#CDCRET-STATE">STATE</a></li>
+		<li><a href="#CDCRET-SETTLE">SETTLE</a></li>
+	</ul>
+	<div id="CDCRET-STATE">
+		<table id="CDCSTTABLE"></table>
+		<div id="CDCSTPAGER"></div>
+	</div>
+	<div id="CDCRET-SETTLE">
+		<table id="CDCSETABLE"></table>
+		<div id="CDCSEPAGER"></div>
+	</div>
+</div>

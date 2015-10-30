@@ -1,0 +1,49 @@
+package bcel.cardcenter.cbs.carofat.utility;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.SocketException;
+
+import jxl.common.Logger;
+
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPReply;
+
+public class FTPFileCopyImp implements FTPFileCopy {
+	private static final Logger logger = Logger.getLogger(FTPFileCopyImp.class);
+	private File file;
+	private String host;
+	private String user;
+	private String passwd;
+	private String workPath;
+	private String localPath;
+	public void access(){
+		FTPClient client = new FTPClient();
+		try {
+			client.connect(host);
+			client.login(user, passwd);
+			int destReply = client.getReplyCode();
+			if (!FTPReply.isPositiveCompletion(destReply)) {
+			    logger.debug("destination FTP server refused connection");
+			    client.disconnect();
+			}
+			else{
+				client.changeWorkingDirectory(workPath);
+				FTPFile[] list = client.listFiles();
+	            for (int i=0; i<list.length; i++) {
+	                String name = list[i].getName();
+	                String destFile = localPath+"/"+name; 
+	                FileOutputStream os = new FileOutputStream(destFile);
+	                String sourceFile = workPath+"/"+name;
+	                client.retrieveFile(sourceFile, os);
+	                logger.debug("get "+sourceFile+" is completed.");
+	            }
+			}
+		} catch (IOException e) {
+			logger.debug("Exception occur while try to access ftp", e);
+		}
+		
+	}
+}

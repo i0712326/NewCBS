@@ -1,0 +1,30 @@
+<script type="text/javascript" src="js/carofat/import.js"></script>
+<div id="CAROFAT-IMPORT" style="height:80px;">
+		<p>
+			<label for="RECORD"> 
+				<strong> RECORD : </strong>
+			</label> 
+			<input type="text" id="RECORD" name="RECORD" size="8" value="0"/>
+			&nbsp;&nbsp;
+			<button id="CUPBUTTON">Submit</button>
+			<button id="CONBUTTON">Confirm</button>
+		</p>
+		<p>
+			<label for="OPTION">
+				<strong>OPTION : </strong>
+			</label>
+			<select id="OPTION" name="OPTION">
+				<option value="">SELECT</option>
+				<option value="state">STATE</option>
+				<option value="settle">SETTLE</option>
+			</select>
+			<label for="IDATE">
+				<strong> DATE :	</strong>
+			</label>
+			<input type="text" id="IDATE" name="DATE" size="12"/>
+		</p>
+</div>
+<div id="CIRET">
+	<table id="CITABLE"></table>
+	<div id="CIPAGER"></div>
+</div>

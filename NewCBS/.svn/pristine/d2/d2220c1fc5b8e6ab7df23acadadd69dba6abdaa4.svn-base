@@ -1,0 +1,72 @@
+package bcel.cardcenter.cbs.carofat.utility;
+
+import java.sql.Date;
+import java.util.List;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxnSettle;
+import bcel.cardcenter.cbs.carofat.entity.CupTxnState;
+
+import jxl.common.Logger;
+
+
+public class CupTxnUtilImp implements CupTxnUtil {
+	private static final Logger logger = Logger.getLogger(CupTxnUtilImp.class);
+	private CupTxnStatementState cupTxnStatementState;
+	private CupTxnSettlementState cupTxnSettlementState;
+	public void setCupTxnStatementState(CupTxnStatementState cupTxnStatementState) {
+		this.cupTxnStatementState = cupTxnStatementState;
+	}
+	public void setCupTxnSettlementState(CupTxnSettlementState cupTxnSettlementState) {
+		this.cupTxnSettlementState = cupTxnSettlementState;
+	}
+	public CupTxnStateManager getCupTxnStateManager(String option){
+		if(option.equals("settle"))
+			return cupTxnSettlementState;
+		else
+			return cupTxnStatementState;
+	}
+	@Override
+	public void upload(String option,Date date) throws Exception{
+		try {
+			getCupTxnStateManager(option).process(date);
+		} catch (Exception e) {
+			logger.debug("Exception occured while try to process data",e);
+			throw new Exception("Process Error Could not process specific file.");
+		}
+	}
+	@Override
+	public void confirm(String option) throws Exception {
+		try{
+			getCupTxnStateManager(option).confirmUpload();
+		}
+		catch(Exception e){
+			logger.debug("Exception occur while try to confirm update data");
+			throw new Exception(e);
+		}
+	}
+	@Override
+	public List<CupTxnSettle> getTmpSettles(String option, Date date, int first, int max) throws Exception {
+		try{
+			return getCupTxnStateManager(option).getTxnSettles(date, first, max);
+		}
+		catch(Exception ex){
+			logger.debug("Exception occur while try to get data from settle",ex);
+			throw new Exception(ex);
+		}
+	}
+	@Override
+	public List<CupTxnState> getTmpStates(String option, Date date, int first, int max) throws Exception {
+		try{
+			return getCupTxnStateManager(option).getTxnStates(date, first, max);
+		}
+		catch(Exception e){
+			logger.debug("Exception occur while try to get date from state",e);
+			throw new Exception(e);
+		}
+		
+	}
+	@Override
+	public int getSize(String option) {
+		return getCupTxnStateManager(option).getRows();
+	}
+}

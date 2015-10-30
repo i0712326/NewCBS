@@ -1,0 +1,105 @@
+package bcel.cardcenter.cbs.carofat.dao;
+import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
+
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class CupTxnDaoImp implements CupTxnDao {
+	private HibernateTemplate hibernateTemplate;
+	public void setSessionFactory(SessionFactory sessionFactory){
+		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+	}
+	
+	@Override
+	public void saveOrUpdateAll(List<CupTxn> cupTxns){
+		hibernateTemplate.saveOrUpdateAll(cupTxns);
+	}
+	
+	@Override
+	public void insertOrUpdateAll(List<CupTxn> cupTxns) {
+		hibernateTemplate.execute(new BatchInsertCallback(cupTxns));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CupTxn> reconcileState() {
+		ReconcileStateCallback action = new ReconcileStateCallback();
+		return toList((List<CupTxn>)hibernateTemplate.execute(action));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CupTxn> reconcileSettle() {
+		ReconcileSettleCallback action = new ReconcileSettleCallback();
+		return toList((List<CupTxn>)hibernateTemplate.execute(action));
+	}
+	private List<CupTxn> toList(final List<?> objs){
+		if(objs==null)
+			return null;
+		if(objs.isEmpty())
+			return null;
+		CupTxn[] list = new CupTxn[objs.size()];
+		list = (CupTxn[])objs.toArray(list);
+		return Arrays.asList(list);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CupTxn> getSettle() {
+		GetSettleCallback action = new GetSettleCallback();
+		return toList((List<CupTxn>)hibernateTemplate.executeFind(action));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CupTxn> getState() {
+		GetStateCallback action = new GetStateCallback();
+		return toList((List<CupTxn>)hibernateTemplate.executeFind(action));
+	}
+
+	@Override
+	public boolean validateDate(Date date) {
+		ValidateDateCallback action = new ValidateDateCallback(date);
+		return (boolean) hibernateTemplate.execute(action);
+	}
+
+	@Override
+	public boolean validateUploadDateType(Date txnDate, String option) {
+		ValidateDateTypeCallback action = new ValidateDateTypeCallback(txnDate,option);
+		return (boolean)hibernateTemplate.execute(action);
+	}
+	
+	@Override
+	public List<CupTxn> searchTxnByTraceOption(String trace, String option) {
+		TxnByTraceOptionCallback action = new TxnByTraceOptionCallback(trace,option);
+		return toList(hibernateTemplate.executeFind(action));
+	}
+
+	@Override
+	public List<CupTxn> searchTxnbyDateOption(Date sqlDate, String option) {
+		TxnByDateOptionCallback action = new TxnByDateOptionCallback(sqlDate,option);
+		return toList(hibernateTemplate.executeFind(action));
+	}
+
+	@Override
+	public void update(CupTxn cup, String option) {
+		UpdateCupTxnCallback action = new UpdateCupTxnCallback(cup,option);
+		hibernateTemplate.execute(action);
+	}
+
+	@Override
+	public void delete(CupTxn cup, String option) {
+		DeleteCupTxnCallback action = new DeleteCupTxnCallback(cup,option);
+		hibernateTemplate.execute(action);
+	}
+
+	@Override
+	public int updatCupTxnStatus() {
+		BatchUpdateCallback action = new BatchUpdateCallback();
+		return (int) hibernateTemplate.execute(action);
+	}
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	
+	<!-- action bean -->
+	<bean id="historyAction" class="bcel.cardcenter.cbs.varofat.action.HistoryAction" scope="prototype">
+		<property name="visaAtmUtility" ref="visaAtmUtility"/>
+	</bean>
+	<bean id="adjustmentAction" class="bcel.cardcenter.cbs.varofat.action.AdjustmentAction" scope="prototype">
+		<property name="visaAtmUtility" ref="visaAtmUtility"/>
+	</bean>
+	<!-- business logic beans -->
+	<bean id="visaAtmUtility" parent="loggingProxy">
+		<property name="target" ref="visaAtmUtilityImp"/>
+	</bean>
+	<bean id="visaAtmUtilityImp" class="bcel.cardcenter.cbs.varofat.service.VisaAtmUtilityImp">
+		<property name="visaAtmDao" ref="visaAtmDao"/> 
+	</bean>
+	<!-- data access object definition bean -->
+	<bean id="visaAtmDao" parent="loggingProxy">
+		<property name="target" ref="visaAtmDaoImp"/>
+	</bean>
+	<bean id="visaAtmDaoImp" class="bcel.cardcenter.cbs.varofat.dao.VisaAtmDaoImp">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+</beans>

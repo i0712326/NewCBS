@@ -1,0 +1,58 @@
+$(function(){
+	var $carofatTabs = $('#CAROFAT-FORM-CONT');
+	var $carofatImp  = $('#carofat-import #content');
+	var $carofatRec  = $('#carofat-reconcile #content');
+	var $carofatAdj  = $('#carofat-adjustment #content');
+	var $carofatHis  = $('#carofat-history #content');
+	
+	$carofatTabs.tabs();
+	$('#CAROFAT-FORM-CONT .ui-tabs-nav').appendTo('#CAROFAT-FORM-CONT');
+	$carofatImp.load('carofat/content/import.html');
+	$carofatRec.load('carofat/content/reconcile.html');
+	$carofatAdj.load('carofat/content/adjustment.html');
+	$carofatHis.load('carofat/content/history.html');
+});
+
+var carColNames = ['id','date','card','trace','code','amount','fee','net','terminal','merchant','addr','country'];
+var carId		= {name:'id',index:'id',xmlmap:'entity > id', width:30, align:'left'};
+var carDate     = {name:'date', index:'date', xmlmap:'entity > date', width: 50, align:'left'};
+var carCard     = {name:'card',index:'card',xmlmap:'entity > card', width: 80, align:'left'};
+var carTrace    = {name:'trace',index:'trace',xmlmap:'entity > trace', width:80,align:'left'};
+var carCode     = {name:'code', index:'code',xmlmap:'entity > code', width:50, align:'left'};
+var carAmt      = {name:'amount',index:'amount',xmlmap:'entity > amount', width:80, align:'right'};
+var carFee	    = {name:'fee',index:'fee',xmlmap:'entity > fee',width:50,align:'right'};
+var carNet	    = {name:'net',index:'net',xmlmap:'entity > net',width:60,align:'right'};
+var carTerm	    = {name:'terminal',index:'terminal',xmlmap:'entity > terminal',width:70,align:'left'};
+var carMer	    = {name:'merchant',index:'merchant',xmlmap:'entity > merchant',width:80,align:'left'};
+var carAddr	    = {name:'address',index:'address',xmlmap:'entity > address', width:80,align:'left'};
+var carCount    = {name:'country',index:'country',xmlmap:'entity > country', width:90,align:'left'};
+
+var carColModel = [carId,carDate,carCard,carTrace,carCode,carAmt,carFee,carNet,carTerm,carMer,carAddr,carCount];
+
+var carReader = { 
+        root:'data', 
+        row:'entity',
+        page:'extend > page', 
+        total:'extend > total', 
+        records:'extend > records',
+        repeatitems:false,
+        id : 'id'
+    };
+
+function carofatTableParam(p, cap){
+	var param = {
+			datatype:'xml',
+			colNames:carColNames,
+			colModel:carColModel,
+			width:1300,
+			height:240,
+			rowNum:10,
+			page:1,
+			pager:p,	
+			rowList:[10,50,100],
+			viewrecords: true,
+		    xmlReader:carReader,
+			caption: cap
+		};
+	return param;
+}

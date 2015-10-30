@@ -1,0 +1,73 @@
+package bcel.cardcenter.cbs.carofat.action.upload;
+
+
+import com.opensymphony.xwork2.ActionSupport;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Date;
+
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
+import org.apache.log4j.Logger;
+public class CarofatImportAction extends ActionSupport {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final Logger logger = Logger.getLogger(CarofatImportAction.class);
+	private int record;
+	private Date date;
+	private String option;
+	private File file;
+	public int getRecord() {
+		return record;
+	}
+	public void setRecord(int record) {
+		this.record = record;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public String getOption() {
+		return option;
+	}
+	public void setOption(String option) {
+		this.option = option;
+	}
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
+	
+	public String uploadFile(){
+		try{
+			
+			FTPClient client = new FTPClient();
+			client.connect("172.16.3.157");
+			 if (!FTPReply.isPositiveCompletion(client.getReplyCode())) {
+			        throw new IOException("Ftp not Conectted ReplyCode = "+client.getReplyCode());
+			 }
+			 if (!client.login("admin", "bcel123?")) {
+			        throw new IOException("login failed");
+			 }
+			 
+			 FileOutputStream os = new FileOutputStream("/opt/cup/get/xxxxx.txt");
+			 client.retrieveFile("/opt/cup/put/bbb.txt", os);
+			 os.close();
+			 
+			return SUCCESS;
+		}
+		catch(Exception ex){
+			logger.debug("Exception occur while try to upload cup file", ex);
+			return ERROR;
+		}
+	}
+}

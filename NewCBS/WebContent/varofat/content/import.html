@@ -1,0 +1,66 @@
+<script type="text/javascript" src="js/varofat/import.js"></script>
+<div id="VAROFAT-IMPORT" style="height:80px;">
+	<p>
+		<label for="REC">
+			<strong> RECORD : </strong>
+		</label>
+		<input type="text" id="REC" name="RECORD" value="0" class="tb_from" style="width:90px;text-align:right;"/>
+		,&nbsp;&nbsp;
+		<label for="IDATE">
+			<strong>DATE : </strong>
+		</label>
+		<input type="text" id="IDATE" name="DATE" class="tb_from" style="width:90px;text-align:right;"/>
+		&nbsp;&nbsp;
+		<button id="IMPORT">Submit</button>
+		<button id="CONFIRM">Confirm</button>
+	</p>
+	<p>
+		<label for="OPTION">
+			<strong>OPTION</strong>
+		</label>
+		<select id="OPTION" name="OPTION">
+			<option value="">select</option>
+			<option value="settle">SETTLE</option>
+			<option value="state">STATE</option>
+		</select>
+		,&nbsp;&nbsp;
+		<label for="FILE">
+			<strong>FILE : </strong>
+		</label>
+		<input type="file" id="FILE" name="FILE"/>
+	</p>
+</div>
+<div id="VIRET">
+	<ul>
+	    <li><a href="#tab-credit">CREDIT</a></li>
+	    <li><a href="#tab-debit">DEBIT</a></li>
+	    <li><a href="#tab-reversal">REVERSAL</a></li>
+	    <li><a href="#tab-adjustment">ADJUSTMENT</a></li>
+	    <li><a href="#tab-chargeback">CHARGEBACK</a></li>
+	    <li><a href="#tab-represent">REPRESENT</a></li>
+  </ul>
+  <div id="tab-credit">
+    <table id="VICRTABLE"></table>
+	<div id="VICRPAGER"></div>
+  </div>
+  <div id="tab-debit">
+    <table id="VIDBTABLE"></table>
+	<div id="VIDBPAGER"></div>
+  </div>
+  <div id="tab-reversal">
+    <table id="VIRVTABLE"></table>
+	<div id="VIRVPAGER"></div>
+  </div>
+  <div id="tab-adjustment">
+  	<table id="VIADTABLE"></table>
+  	<div id="VIADPAGER"></div>
+  </div>
+  <div id="tab-chargeback">
+    <table id="VICBTABLE"></table>
+	<div id="VICBPAGER"></div>
+  </div>
+  <div id="tab-represent">
+    <table id="VIRPTABLE"></table>
+	<div id="VIRPPAGER"></div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	
+	<bean id="carofatHistory" class="bcel.cardcenter.cbs.carofat.action.history.CarofatHistoryAction" scope="prototype">
+		<property name="cupTxnUtil" ref="cupTxnUtil"/>
+	</bean>
+	
+	<bean id="carofatAdjustment" class="bcel.cardcenter.cbs.carofat.action.adjustment.CarofatAdjustmentAction" scope="prototype">
+		<property name="cupTxnUtil" ref="cupTxnUtil"/>
+	</bean>
+	
+	<bean id="carofatReconcile" class="bcel.cardcenter.cbs.carofat.action.reconcile.CarofatReconcileAction" scope="prototype">
+		<property name="cupTxnUtil" ref="cupTxnUtil"/>
+		<property name="cupTxnReportExportion" ref="cupTxnReportExportion"/>
+	</bean>
+		
+	<bean id="carofatImport" class="bcel.cardcenter.cbs.carofat.action.upload.CarofatImportAction" scope="prototype">
+		<property name="cupTxnUtil" ref="cupTxnUtil"/>
+		<property name="cupTxnReportExportion" ref="cupTxnReportExportion"/>
+	</bean>
+	
+	<bean id="cupTxnUtil" class="bcel.cardcenter.cbs.carofat.utility.CupTxnUtilImp" scope="prototype">
+		<property name="cupTxnSettlementState" ref="cupTxnSettlementState"/>
+		<property name="cupTxnStatementState" ref="cupTxnStatementState"/>
+		<property name="cupSettlementState" ref="cupSettlementState"/>
+		<property name="cupStatementState" ref="cupStatementState"/>
+		<property name="cupReconcileDao" ref="cupReconcileDao"/>
+	</bean>
+	
+	<bean id="cupTxnSettlementState" class="bcel.cardcenter.cbs.carofat.utility.CupTxnSettlementState">
+		<property name="cupTxnSettlementReader" ref="settlementReader"/>
+		<property name="cupTxnSettleDao" ref="cupTxnSettleDao"/>
+		<property name="cupFtpFileAccessor" ref="cupFtpFileAccessor"/>
+	</bean>
+	<bean id="cupTxnStatementState" class="bcel.cardcenter.cbs.carofat.utility.CupTxnStatementState">
+		<property name="cupTxnStatementReader" ref="statementReader"/>
+		<property name="cupTxnStateDao" ref="cupTxnStateDao"/>
+		<property name="cupFtpFileAccessor" ref="cupFtpFileAccessor"/>
+	</bean>
+	<bean id="settlementReader" class="bcel.cardcenter.cbs.carofat.utility.CupTxnSettlementReader"/>
+	<bean id="statementReader" class="bcel.cardcenter.cbs.carofat.utility.CupTxnStatementReader"/>
+	<bean id="cupFtpFileAccessor" class="bcel.cardcenter.cbs.carofat.utility.FTPFileAccessorImp">
+		<property name="host" value="172.16.3.157"/>
+		<property name="port" value="21"/>
+		<property name="user" value="admin"/>
+		<property name="passwd" value="bcel123?"/>
+		<property name="workPath" value="/opt/cuptmp"/>
+		<property name="localPath" value="C:\temp"/>
+	</bean>
+	<bean id="cupTxnStateDao" parent="transactionProxy">
+		<property name="target" ref="cupTxnStateDaoImp"/>
+	</bean>
+	<bean id="cupTxnStateDaoImp" class="bcel.cardcenter.cbs.carofat.dao.CupTxnStateDaoImp">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="cupTxnSettleDao" parent="transactionProxy">
+		<property name="target" ref="cupTxnSettleDaoImp"/>
+	</bean>
+	<bean id="cupTxnSettleDaoImp" class="bcel.cardcenter.cbs.carofat.dao.CupTxnSettleDaoImp">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!--  -->
+	<bean id="cupTxnReportExportion" class="bcel.cardcenter.cbs.utility.report.CupTxnReportExportion"/>
+	
+	<!--  -->
+	<bean id="cupSettlementState" class="bcel.cardcenter.cbs.carofat.utility.CupSettlementState">
+		<property name="cupSettleDao" ref="cupSettleDao"/>
+		<property name="xml2ObjectService" ref="xml2ObjectSettleServiceImp"/>
+	</bean>
+	<bean id="cupStatementState" class="bcel.cardcenter.cbs.carofat.utility.CupStatementState">
+		<property name="cupStateDao" ref="cupStateDao"/>
+		<property name="xml2ObjectService" ref="xml2ObjectStateServiceImp"/>
+	</bean>
+	<bean id="cupSettleDao" parent="transactionProxy">
+		<property name="target" ref="cupSettleDaoImp"/>
+	</bean>
+	<bean id="cupStateDao" parent="transactionProxy">
+		<property name="target" ref="cupStateDaoImp"/>
+	</bean>
+	<bean id="cupSettleDaoImp" class="bcel.cardcenter.cbs.carofat.dao.CupSettleDaoImp">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="cupStateDaoImp" class="bcel.cardcenter.cbs.carofat.dao.CupStateDaoImp">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- XML to Object -->
+	
+	<bean id="xml2ObjectSettleServiceImp" class="bcel.cardcenter.cbs.carofat.utility.Xml2ObjectSettleServiceImp"/>
+	
+	<bean id="xml2ObjectStateServiceImp" class="bcel.cardcenter.cbs.carofat.utility.Xml2ObjectStateServiceImp"/>
+	
+	<!-- reconcile -->
+	
+	<bean id="cupReconcileDao" parent="transactionProxy">
+		<property name="target" ref="cupReconcileDaoImp"/>
+	</bean>
+	<bean id="cupReconcileDaoImp" class="bcel.cardcenter.cbs.carofat.dao.CupReconcileDaoImp">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+</beans>

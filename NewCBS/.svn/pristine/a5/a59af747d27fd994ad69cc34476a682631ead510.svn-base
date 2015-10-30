@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="carofat" namespace="/carofat" extends="cbs_package">
+		<!-- data import -->
+		<action name="carofat.import" class="carofatImport" method="uploadFile">
+			<result name="success" type="dispatcher">
+				test/import-success.xml
+			</result>
+			<result name="error" type="dispatcher">
+				test/import-response.xml
+			</result>
+		</action>
+		<!-- upload Result -->
+		<action name="cupTxnUpload" class="cupTxnUploadAction" method="execute">
+			<result name="success" type="dispatcher">
+				response/cupTxnUploadXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/cupTxnUploadXml.jsp
+			</result>
+		</action>
+		<!-- download file -->
+		<action name="cupTxnDownload" class="cupTxnUploadAction" method="download">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+			  	<param name="inputName">fileInputStream</param>
+			  	<param name="contentDisposition">attachment;${ contentDisposition }</param>
+			  	<param name="bufferSize">1024</param>
+			  	<param name="contentLength">${ contentLength }</param>
+			</result>
+		</action>
+		<!-- persist records -->
+		<action name="persist" class="cupTxnUploadAction" method="persist">
+			<result name="success" type="dispatcher">
+				/success.html
+			</result>
+			<result name="error" type="dispatcher">
+				/error.html
+			</result>
+		</action>
+		<!-- reconcile -->
+		<action name="reconcile" class="cupTxnReconcileAction" method="reconcile">
+			<result name="success" type="dispatcher">
+				response/cupTxnReconXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/processResXml.jsp
+			</result>
+		</action>
+		<action name="viewstate" class="cupTxnReconcileAction" method="viewState">
+			<result name="success" type="dispatcher">
+				response/cupTxnStateView.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/processResXml.jsp
+			</result>
+		</action>
+		<action name="viewsettle" class="cupTxnReconcileAction" method="viewSettle">
+			<result name="success" type="dispatcher">
+				response/cupTxnSettleView.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/processResXml.jsp
+			</result>
+		</action>
+		<action name="download" class="cupTxnReconcileAction" method="download">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+			  	<param name="inputName">fileInputStream</param>
+			  	<param name="contentDisposition">attachment;${ contentDisposition }</param>
+			  	<param name="bufferSize">1024</param>
+			  	<param name="contentLength">${ contentLength }</param>
+			</result>
+		</action>
+		<action name="updateCupTxnStatus" class="cupTxnReconcileAction" method="update">
+			<result name="success" type="dispatcher">
+				response/processResXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/processResXml.jsp
+			</result>
+		</action>
+		<!-- action for adjust data -->
+		<action name="viewTxn" class="viewTxnAction" method="view">
+			<result name="success" type="dispatcher">
+				response/viewResXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/viewResXml.jsp
+			</result>
+		</action>
+		<action name="updateTxn" class="viewTxnAction" method="update">
+			<result name="success" type="dispatcher">
+				response/cupTxnDeleteUpdateXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/cupTxnDeleteUpdateXml.jsp
+			</result>
+		</action>
+		<action name="deleteTxn" class="viewTxnAction" method="delete">
+			<result name="success" type="dispatcher">
+				response/cupTxnDeleteUpdateXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/cupTxnDeleteUpdateXml.jsp
+			</result>
+		</action>
+		<!--  action for history	-->
+		<action name="getHistory" class="cupTxnHistory" method="getReport">
+			<result name="success" type="dispatcher">
+				response/historyResXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/historyResXml.jsp
+			</result>
+		</action>
+		<action name="viewHistory" class="cupTxnHistory" method="view">
+			<result name="success" type="dispatcher">
+				response/historyRecXml.jsp
+			</result>
+			<result name="error" type="dispatcher">
+				response/historyRecXml.jsp
+			</result>
+		</action>
+		<action name="historyDownload" class="cupTxnHistory" method="download">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+			  	<param name="inputName">fileInputStream</param>
+			  	<param name="contentDisposition">attachment;${ contentDisposition }</param>
+			  	<param name="bufferSize">1024</param>
+			  	<param name="contentLength">${ contentLength }</param>
+			</result>
+		</action>
+	</package>
+</struts>

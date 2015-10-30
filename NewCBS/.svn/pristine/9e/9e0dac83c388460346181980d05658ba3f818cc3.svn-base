@@ -1,0 +1,218 @@
+package bcel.cardcenter.cbs.carofat.utility;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.log4j.Logger;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxnSettle;
+import bcel.cardcenter.cbs.carofat.entity.CupTxnState;
+
+public class CupTxnStatementReader implements CupTxnFileReader {
+	private static Logger logger = Logger.getLogger(CupTxnStatementReader.class);
+	private final static String CARDNUMBER = "^[0-9]{16}$";
+	private final static String TRACE 	  = "^[0-9]{6}$";
+	private final static String TIME	  = "^[0-9]{2}:[0-9]{2}:[0-9]{2}$";
+	private final static String INQFEE	  = "Charge CUP BALANCE INQUIRY OVERSEA";
+	private final static String CWD		  = "CUP CASH OVERSEA";
+	private final static String CWDFEE	  = "Charge CUP CASH OVERSEA";
+	private final static String POS		  = "CUP POS OVERSEA";
+	private final static String CWDREV	  = "Reverse CUP CASH OVERSEA";
+	private final static String CWDFEEREV = "Reverse Charge CUP CASH OVERSEA";
+	
+	private Pattern cardNumberPattern;
+	private Pattern tracePattern;
+	private Pattern timePattern;
+	private Pattern inqFeePattern;
+	private Pattern cwdPattern;
+	private Pattern cwdFeePattern;
+	private Pattern posPattern;
+	private Pattern cwdRevPattern;
+	private Pattern cwdFeeRevPattern;
+	private Matcher matcher;
+	private File file;
+	private Date importDate;
+	public CupTxnStatementReader(){
+		cardNumberPattern = Pattern.compile(CARDNUMBER);
+		tracePattern	  = Pattern.compile(TRACE);
+		timePattern		  = Pattern.compile(TIME);
+		inqFeePattern	  = Pattern.compile(INQFEE);
+		cwdPattern		  = Pattern.compile(CWD);
+		cwdFeePattern	  = Pattern.compile(CWDFEE);
+		posPattern		  = Pattern.compile(POS);
+		cwdRevPattern	  = Pattern.compile(CWDREV);
+		cwdFeeRevPattern  = Pattern.compile(CWDFEEREV);
+	}
+	
+	public void setFile(File file){
+		this.file = file;
+	}
+	public void setImportDate(Date importDate){
+		this.importDate = importDate;
+	}
+	@Override
+	public List<CupTxnState> readState() throws Exception{ 
+		List<CupTxnState> cupTxns = new ArrayList<CupTxnState>();
+		try {
+			InputStream in = new FileInputStream(file);
+			XSSFWorkbook wb = (XSSFWorkbook) WorkbookFactory.create(in);
+			XSSFSheet sheet = wb.getSheetAt(0);
+			
+			int lenght = sheet.getLastRowNum();
+			
+			for(int i=16;i<lenght-5;i++){
+			
+				XSSFRow row = sheet.getRow(i);
+				
+				// read date of transaction
+				Date date 		  = new Date(row.getCell(1).getDateCellValue().getTime());
+				
+				String cardNumber = null;
+				String trace      = null;
+				String txnType    = null;
+				String txnTime	  = null;
+				String refer 	  = null;
+				String terminalId = null;
+				// read description
+				String bin		  =  row.getCell(3).getStringCellValue();
+				String description = row.getCell(5).getStringCellValue();
+				String[] tokens = description.split("\\|");
+				for(int j=0;j<tokens.length;j++){
+					String token = tokens[j].trim();
+					matcher = inqFeePattern.matcher(token);
+					if(matcher.find())
+						txnType = "INQ";
+					matcher = cwdPattern.matcher(token);
+					if(matcher.find())
+						txnType = "CWD";
+					matcher = cwdFeePattern.matcher(token);
+					if(matcher.find())
+						txnType = "FEE";
+					matcher = posPattern.matcher(token);
+					if(matcher.find())
+						txnType = "POS";
+					matcher = cwdRevPattern.matcher(token);
+					if(matcher.find())
+						txnType = "REV";
+					matcher = cwdFeeRevPattern.matcher(token);
+					if(matcher.find())
+						txnType = "FRV";
+					matcher = cardNumberPattern.matcher(token);
+					if(matcher.find()){
+						cardNumber = token;
+					}
+					
+					matcher = tracePattern.matcher(token);
+					if(matcher.find()){
+						trace = token;
+					}
+					matcher = timePattern.matcher(token);
+					if(matcher.find()){
+						txnTime = token;
+					}
+					if(j==3){
+						terminalId = token;
+					}
+					if(j==4){
+						refer = token;
+					}
+				}
+				
+				double amount = row.getCell(10).getNumericCellValue();
+				java.util.Date pDate = new java.util.Date();
+				long time = pDate.getTime();
+				java.sql.Date processDate = new java.sql.Date(time);
+				CupTxnState cupTxn = new CupTxnState();
+				cupTxn.setDate(date);
+				cupTxn.setImportDate(importDate);
+				cupTxn.setProcessDate(processDate);
+				cupTxn.setCard(cardNumber);
+				cupTxn.setTrace(trace);
+				cupTxn.setType(txnType);
+				cupTxn.setBin(bin);
+				cupTxn.setTime(txnTime);
+				cupTxn.setTerminalId(terminalId);
+				cupTxn.setRefer(refer);
+				
+				String type = cupTxn.getType();
+				if(type!=null){
+					if(type.equals("REV") || type.equals("FRV")){
+						amount = row.getCell(8).getNumericCellValue();
+						amount = -1*amount;
+					}
+				}
+				cupTxn.setAmount(amount);
+				logger.debug(cupTxn.toString());
+				cupTxns.add(cupTxn);
+			}
+		
+		} catch (FileNotFoundException e) {
+			logger.debug("Not Found File Exeception", e);
+			throw new FileNotFoundException();
+		} catch (IOException e) {
+			logger.debug("IOException happen", e);
+			throw new IOException();
+		} catch (InvalidFormatException e) {
+			logger.debug("InvalidFormat Exception Happend", e);
+			throw new InvalidFormatException("File Format Invalid");
+		}
+		return filterTxns(cupTxns);
+	}
+	
+	private List<CupTxnState> filterTxns(List<CupTxnState> cupTxns){
+		List<CupTxnState> after = new ArrayList<CupTxnState>();
+		for(int i=0;i<cupTxns.size();i++){
+			CupTxnState item = cupTxns.get(i);
+			String bin = item.getBin();
+			for(int j=i+1;j<cupTxns.size();j++){
+				CupTxnState temp = cupTxns.get(j);
+				String tempBin = temp.getBin();
+				if(bin.equals(tempBin)){
+					String txnType = temp.getType();
+					if(txnType != null){
+						if(txnType.equals("FEE")){
+							double fee = temp.getAmount();
+							if(item.getType().equals("CWD")){
+								item.setFee(fee);
+								cupTxns.remove(j);
+							}
+						}
+						if(txnType.equals("FRV")){
+							double fee = temp.getAmount();
+							if(item.getType().equals("REV")){
+								item.setFee(fee);
+								cupTxns.remove(j);
+							}
+						}
+					}
+				}
+			}
+			if (item.getCard() != null && item.getTrace() != null
+					&& item.getBin() != null && item.getType() != null) {
+				double net = item.getAmount() + item.getFee();
+				item.setNet(net);
+				logger.debug(item.toString());
+				after.add(item);
+			}
+		}
+		
+		return after;
+	}
+	@Override
+	public List<CupTxnSettle> readSettle() throws Exception {
+		return null;
+	}
+}

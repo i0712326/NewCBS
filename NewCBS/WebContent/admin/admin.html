@@ -1,0 +1,30 @@
+<script type="text/javascript">
+<!--
+	$('#ADMIN-MAIN-BOARD').tabs();
+	$("#ADMIN-MAIN-BOARD .ui-tabs-nav" ).appendTo( "#ADMIN-MAIN-BOARD" );
+	
+	$('#ADMIN-ADDUSER').load('admin/addUser/addUser.html');
+//-->
+</script>
+
+<div id="ADMIN-MAIN-BOARD">
+	<div id="ADMIN-MAIN-CONTENT">
+		<div id="ADMIN-CONTRL" class="tabs-bottom">
+			<ul>
+				<li><a href="#tabs-1">ADD USER</a></li>
+				<li><a href="#tabs-2">Proin dolor</a></li>
+				<li><a href="#tabs-3">Aenean lacinia</a></li>
+			</ul>
+			<div class="tabs-spacer"></div>
+			<div id="tabs-1">
+				<div id="ADMIN-ADDUSER"></div>
+			</div>
+			<div id="tabs-2">
+				<p>tabs-2</p>
+			</div>
+			<div id="tabs-3">
+				<p>tabs-3</p>
+			</div>
+		</div>
+	</div>
+</div>

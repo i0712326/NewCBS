@@ -1,0 +1,59 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import oracle.jdbc.internal.OracleTypes;
+
+import org.hibernate.jdbc.Work;
+
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public class ReconcileStateWork implements Work {
+	private List<CupTxn> states;
+	public List<CupTxn> getStates() {
+		return states;
+	}
+	public void setStates(List<CupTxn> states) {
+		this.states = states;
+	}
+	@Override
+	public void execute(Connection conn) throws SQLException {
+		String sql = "{call CBSPACKAGE.RECONCILESTATE( ? )}";
+		CallableStatement callableStatement = conn.prepareCall(sql);
+		callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+		callableStatement.execute();
+		ResultSet rs = (ResultSet) callableStatement.getObject(1);
+		List<CupTxn> cups = new ArrayList<CupTxn>();
+		while(rs.next()){
+			Date date 		= rs.getDate("TXNDATE");
+			String card 	= rs.getString("CARD");
+			double amount 	= rs.getDouble("AMOUNT");
+			double fee		= rs.getDouble("FEE");
+			double net		= rs.getDouble("NET");
+			String trace 	= rs.getString("TRACE");
+			String txnType	= rs.getString("TXNTYPE");
+			String status	= rs.getString("STATUS");
+			
+			CupTxn	cup 	= new CupTxn();
+			
+			cup.setDate(date);
+			cup.setCard(card);
+			cup.setAmount(amount);
+			cup.setFee(fee);
+			cup.setNet(net);
+			cup.setTrace(trace);
+			cup.setTxnType(txnType);
+			cup.setStatus(status);
+			
+			cups.add(cup);
+		}
+		setStates(cups);
+	}
+
+}

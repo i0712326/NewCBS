@@ -1,0 +1,35 @@
+$(function(){
+	var $carofatAdj = $('#CAROFAT-ADJUSTMENT');
+	var $date = $carofatAdj.find('#CADATE');
+	var $option = $carofatAdj.find('#CAOPTION');
+	var $search = $carofatAdj.find('#CASEARCH');
+	var $update	= $carofatAdj.find('#CAUPDATE');
+	var $delete = $carofatAdj.find('#CADELETE');
+	var $card	= $carofatAdj.find('#CACARD');
+	var $trace	= $carofatAdj.find('#CATRACE');
+	var $caret  = $('#CARET');
+	var $caTable= $caret.find('#CATABLE');
+	var $caPager= $caret.find('#CAPAGER');
+	
+	$date.datepicker({
+		showOn: "button",
+	    buttonImage: "css/img/calendar.gif",
+	    buttonImageOnly: true
+	});
+	$search.button();
+	$update.button();
+	$delete.button();
+	
+	$update.hide();
+	$delete.hide();
+	
+	$caTable.jqGrid(carofatTableParam($caPager,'VIEW-RESULT'));
+	// action
+	$search.click(function(){
+		var allFields = [$date,$option,$card,$trace];
+		var check = dataValidation(allFields);
+		if(check==true){
+			startProcessing();
+		}
+	});
+});

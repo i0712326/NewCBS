@@ -1,0 +1,101 @@
+$(function(){
+	var $rec     = $('#MAROFAT-IMPORT-FORM #MIMREC');
+	var $date    = $('#MAROFAT-IMPORT-FORM #MIMDATE');
+	var $option  = $('#MAROFAT-IMPORT-FORM #MIMOPTION');
+	var $file    = $('#MAROFAT-IMPORT-FORM #MIMFILE');
+	var $submit  = $('#MAROFAT-IMPORT-FORM #MIMSUBMIT');
+	var $confirm = $('#MAROFAT-IMPORT-FORM #MIMCONFIRM');
+	var $miTabs  = $('#MIRET');
+	
+	var $miCrTable = $('#MIRET #MICRTABLE');
+	var $miCrPager = $('#MIRET #MICRPAGER');
+	var $miDbTable = $('#MIRET #MIDBTABLE');
+	var $miDbPager = $('#MIRET #MIDBPAGER');
+	var $miRvTable = $('#MIRET #MIRVTABLE');
+	var $miRvPager = $('#MIRET #MIRVPAGER');
+	var $miAdTable = $('#MIRET #MIADTABLE');
+	var $miAdPager = $('#MIRET #MIADPAGER');
+	var $miCbTable = $('#MIRET #MICBTABLE');
+	var $miCbPager = $('#MIRET #MICBPAGER');
+	var $miRpTable = $('#MIRET #MIRPTABLE');
+	var $miRpPager = $('#MIRET #MIRPPAGER');
+	
+	$date.datepicker({
+		 showOn: "button",
+		 buttonImage: "css/img/calendar.gif",
+		 buttonImageOnly: true
+	});
+	$submit.button();
+	$confirm.button();
+	$confirm.hide();
+	$miTabs.tabs();
+	
+	$miCrTable.jqGrid(getMiParam(miColNames,miColModels,$miCrPager,miReader,'Credit'))
+	.navGrid('#MICRPAGER',{edit:false,add:false,del:false,search:false})
+	.navButtonAdd('#MICRPAGER',{
+		   caption:'',
+		   buttonicon:"ui-icon-arrowstop-1-s", 
+		   onClickButton: function(){ 
+		     alert("Adding Row");
+		   }, 
+		   position:"last"
+		});
+	$miDbTable.jqGrid(getMiParam(miColNames,miColModels,$miDbPager,miReader,'Debit'))
+	.navGrid('#MIDBPAGER',{edit:false,add:false,del:false,search:false})
+	.navButtonAdd('#MIDBPAGER',{
+		   caption:'',
+		   buttonicon:"ui-icon-arrowstop-1-s", 
+		   onClickButton: function(){ 
+		     alert("Adding Row");
+		   }, 
+		   position:"last"
+		});;
+	$miRvTable.jqGrid(getMiParam(miColNames,miColModels,$miRvPager,miReader,'Reversal'))
+	.navGrid('#MIRVPAGER',{edit:false,add:false,del:false,search:false})
+	.navButtonAdd('#MIRVPAGER',{
+		   caption:'',
+		   buttonicon:"ui-icon-arrowstop-1-s", 
+		   onClickButton: function(){ 
+		     alert("Adding Row");
+		   }, 
+		   position:"last"
+		});
+	$miAdTable.jqGrid(getMiParam(miColNames,miColModels,$miAdPager,miReader,'Adjustment'))
+	.navGrid('#MIADPAGER',{edit:false,add:false,del:false,search:false})
+	.navButtonAdd('#MIADPAGER',{
+		   caption:'',
+		   buttonicon:"ui-icon-arrowstop-1-s", 
+		   onClickButton: function(){ 
+		     alert("Adding Row");
+		   }, 
+		   position:"last"
+		});
+	$miCbTable.jqGrid(getMiParam(miColNames,miColModels,$miCbPager,miReader,'ChargeBack'))
+	.navGrid('#MICBPAGER',{edit:false,add:false,del:false,search:false})
+	.navButtonAdd('#MICBPAGER',{
+		   caption:'',
+		   buttonicon:"ui-icon-arrowstop-1-s", 
+		   onClickButton: function(){ 
+		     alert("Adding Row");
+		   }, 
+		   position:"last"
+		});
+	$miRpTable.jqGrid(getMiParam(miColNames,miColModels,$miRpPager,miReader,'Represent'))
+	.navGrid('#MIRPPAGER',{edit:false,add:false,del:false,search:false})
+	.navButtonAdd('#MIRPPAGER',{
+		   caption:'',
+		   buttonicon:"ui-icon-arrowstop-1-s", 
+		   onClickButton: function(){ 
+		     alert("Adding Row");
+		   }, 
+		   position:"last"
+		});
+	// action
+	$submit.click(function(){
+		var allFields = [$rec,$date,$option,$file];
+		var check = dataValidation(allFields);
+		if(check==true){
+			startProcessing();
+		}
+	});
+}); 

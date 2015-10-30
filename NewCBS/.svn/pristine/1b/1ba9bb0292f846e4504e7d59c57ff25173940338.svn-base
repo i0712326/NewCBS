@@ -1,0 +1,7 @@
+package bcel.cardcenter.cbs.carofat.utility;
+import java.util.List;
+import bcel.cardcenter.cbs.carofat.entity.CupTxn;
+
+public interface CupTxnFileReader {
+	public List<CupTxn> read();
+}

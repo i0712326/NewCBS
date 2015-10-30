@@ -1,0 +1,19 @@
+package bcel.cardcenter.cbs.carofat.dao;
+
+import java.sql.SQLException;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
+public class ReconcileSettleCallback implements HibernateCallback {
+
+	@Override
+	public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+		ReconcileSettleWork reconcileSettle = new ReconcileSettleWork();
+		session.doWork(reconcileSettle);
+		return reconcileSettle.getSettles();
+	}
+
+}
